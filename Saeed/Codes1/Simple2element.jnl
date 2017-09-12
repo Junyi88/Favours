@@ -1,0 +1,2774 @@
+# -*- coding: mbcs -*-
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].ConstrainedSketch(name='__profile__', sheetSize=1.0)
+mdb.models['Model-1'].sketches['__profile__'].rectangle(point1=(0.0, 0.0), 
+    point2=(1.0, 1.0))
+mdb.models['Model-1'].Part(dimensionality=THREE_D, name='Part-1', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].parts['Part-1'].BaseSolidExtrude(depth=1.0, sketch=
+    mdb.models['Model-1'].sketches['__profile__'])
+del mdb.models['Model-1'].sketches['__profile__']
+mdb.models['Model-1'].Material(name='Material-1')
+mdb.models['Model-1'].materials['Material-1'].Density(table=((8e-09, ), ))
+mdb.models['Model-1'].materials['Material-1'].Depvar(n=200)
+mdb.models['Model-1'].materials['Material-1'].UserMaterial(mechanicalConstants=
+    (0.0, ))
+mdb.models['Model-1'].HomogeneousSolidSection(material='Material-1', name=
+    'Section-1', thickness=None)
+mdb.models['Model-1'].rootAssembly.DatumCsysByDefault(CARTESIAN)
+mdb.models['Model-1'].rootAssembly.Instance(dependent=OFF, name='Part-1-1', 
+    part=mdb.models['Model-1'].parts['Part-1'])
+mdb.models['Model-1'].ExplicitDynamicsStep(name='Step-1', previous='Initial', 
+    timePeriod=10.0)
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(variables=(
+    'S', 'SVAVG', 'PE', 'PEVAVG', 'PEEQ', 'PEEQVAVG', 'LE', 'U', 'V', 'A', 
+    'RF', 'CSTRESS', 'EVF', 'SDV'))
+mdb.models['Model-1'].SmoothStepAmplitude(data=((0.0, 0.0), (1.0, 0.1), (10.0, 
+    0.1)), name='Amp-1', timeSpan=STEP)
+mdb.models['Model-1'].rootAssembly.Set(name='Set-1', vertices=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].vertices.getSequenceFromMask(
+    ('[#8 ]', ), ))
+mdb.models['Model-1'].EncastreBC(createStepName='Step-1', localCsys=None, name=
+    'BC-1', region=mdb.models['Model-1'].rootAssembly.sets['Set-1'])
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].faces.getSequenceFromMask(
+    ('[#8 ]', ), ), name='Set-2')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-2', region=mdb.models['Model-1'].rootAssembly.sets['Set-2'], u1=UNSET, 
+    u2=0.0, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].faces.getSequenceFromMask(
+    ('[#20 ]', ), ), name='Set-3')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-3', region=mdb.models['Model-1'].rootAssembly.sets['Set-3'], u1=UNSET, 
+    u2=UNSET, u3=0.0, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+del mdb.models['Model-1'].boundaryConditions['BC-3']
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].faces.getSequenceFromMask(
+    ('[#10 ]', ), ), name='Set-4')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-3', region=mdb.models['Model-1'].rootAssembly.sets['Set-4'], u1=0.0, 
+    u2=UNSET, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+del mdb.models['Model-1'].boundaryConditions['BC-3']
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].faces.getSequenceFromMask(
+    ('[#1 ]', ), ), name='Set-5')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-3', region=mdb.models['Model-1'].rootAssembly.sets['Set-5'], u1=0.0, 
+    u2=UNSET, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].faces.getSequenceFromMask(
+    ('[#20 ]', ), ), name='Set-6')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-4', region=mdb.models['Model-1'].rootAssembly.sets['Set-6'], u1=UNSET, 
+    u2=UNSET, u3=0.0, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].faces.getSequenceFromMask(
+    ('[#2 ]', ), ), name='Set-7')
+mdb.models['Model-1'].DisplacementBC(amplitude='Amp-1', createStepName='Step-1'
+    , distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-5', region=mdb.models['Model-1'].rootAssembly.sets['Set-7'], u1=UNSET, 
+    u2=0.1, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=1.0)
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8R, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    kinematicSplit=AVERAGE_STRAIN, hourglassControl=DEFAULT, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6, elemLibrary=EXPLICIT), 
+    ElemType(elemCode=C3D4, elemLibrary=EXPLICIT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.Job(activateLoadBalancing=False, atTime=None, contactPrint=OFF, 
+    description='', echoPrint=OFF, explicitPrecision=SINGLE, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='Simple', nodalOutputPrecision=SINGLE, 
+    numCpus=1, numDomains=1, parallelizationMethodExplicit=DOMAIN, queue=None, 
+    resultsFormat=ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=
+    0, waitMinutes=0)
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': '1 elements have missing property definitions. The elements have been identified in element set ErrElemMissingSection.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST EVF IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST LE IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PE IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQ IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST S IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SDV IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'NO SECTION DEFINITIONS FOUND', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Simple.odb', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase failed due to errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Simple'})
+mdb.models['Model-1'].rootAssembly.Set(cells=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), name='BILLET')
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].parts['Part-1'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=Region(
+    cells=mdb.models['Model-1'].parts['Part-1'].cells.getSequenceFromMask(
+    mask=('[#1 ]', ), )), sectionName='Section-1', thicknessAssignment=
+    FROM_SECTION)
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST EVF IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(STARTED, {'phase': PACKAGER_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 13112, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'There are 5 warning messages in the data (.dat) file.  Please check the data file for possible errors in the input file.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': PACKAGER_PHASE, 
+    'message': 'NO VUMAT SUBROUTINE WAS SUPPLIED FOR THE USER MATERIAL NAMED: MATERIAL-1', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': PACKAGER_PHASE, 
+    'message': 'Analysis failed due to Errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=3.0)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.5, 
+    0.1), (3.0, 0.1)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=4.0)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.5, 
+    0.1), (4.0, 0.1)), timeSpan=STEP)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (1.0, 
+    0.1), (4.0, 0.1)), timeSpan=STEP)
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-0.1)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+mdb.models['Model-1'].keywordBlock.replace(37, 
+    '\n** ----------------------------------------------------------------\n** \n*INITIAL CONDITIONS,TYPE=SOLUTION\nBILLET, 0.7\n**\n**-----------------------------------------------------------------\n** STEP: Step-1\n**')
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].materials['Material-1'].depvar.setValues(n=1)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=5.0)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (1.0, 
+    0.1), (5.0, 0.1)), timeSpan=STEP)
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.5)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.4)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=1.0)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST EVF IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(STARTED, {'phase': PACKAGER_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 22112, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'There are 5 warning messages in the data (.dat) file.  Please check the data file for possible errors in the input file.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': PACKAGER_PHASE, 
+    'message': 'NO VUMAT SUBROUTINE WAS SUPPLIED FOR THE USER MATERIAL NAMED: MATERIAL-1', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': PACKAGER_PHASE, 
+    'message': 'Analysis failed due to Errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=0.1)
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.5)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].boundaryConditions['BC-2'].suppress()
+mdb.models['Model-1'].boundaryConditions['BC-3'].suppress()
+mdb.models['Model-1'].boundaryConditions['BC-4'].suppress()
+mdb.models['Model-1'].boundaryConditions['BC-2'].resume()
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].boundaryConditions['BC-4'].resume()
+mdb.models['Model-1'].boundaryConditions['BC-3'].resume()
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=1.0)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].steps['Step-1'].setValues(timeIncrementationMethod=
+    FIXED_USER_DEFINED_INC, userDefinedInc=1e-07)
+mdb.models['Model-1'].steps['Step-1'].setValues(maxIncrement=None, scaleFactor=
+    1.0, timeIncrementationMethod=AUTOMATIC_GLOBAL)
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=10.0)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (2.0, 
+    0.1), (10.0, 0.1)), timeSpan=STEP)
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-0.1)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+mdb.models['Model-1'].steps['Step-1'].setValues(maxIncrement=1e-08, timePeriod=
+    5.0)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (1.0, 
+    0.1), (5.0, 0.1)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.2)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].steps['Step-1'].setValues(massScaling=((SEMI_AUTOMATIC, 
+    MODEL, AT_BEGINNING, 10.0, 0.0, None, 0, 0, 0.0, 0.0, 0, None), ))
+mdb.models['Model-1'].steps['Step-1'].setValues(massScaling=PREVIOUS_STEP)
+mdb.models['Model-1'].steps['Step-1'].setValues(maxIncrement=1e-09)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (1e-05, 
+    0.0001), (0.0001, 0.001), (0.001, 0.01), (0.01, 0.05), (0.1, 0.1), (5.0, 
+    0.1)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=1.0)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (1.0, 
+    0.1), (5.0, 0.1)), timeSpan=STEP)
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-1.0)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (1.0, 
+    1.0), (5.0, 1.0)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].steps['Step-1'].setValues(maxIncrement=1e-08)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].steps['Step-1'].setValues(maxIncrement=None)
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-0.3)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (1.0, 
+    0.02), (3.0, 0.1), (5.0, 0.3)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (1.0, 
+    0.02), (3.0, 0.1), (6.0, 0.3)), timeSpan=STEP)
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=6.0)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-0.5)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (1.0, 
+    0.02), (3.0, 0.1), (10.0, 0.5)), timeSpan=STEP)
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=10.0)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].Temperature(createStepName='Initial', 
+    crossSectionDistribution=CONSTANT_THROUGH_THICKNESS, distributionType=
+    UNIFORM, magnitudes=(1150.0, ), name='TEMP', region=
+    mdb.models['Model-1'].rootAssembly.sets['BILLET'])
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8T, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6T, elemLibrary=EXPLICIT), 
+    ElemType(elemCode=C3D4T, elemLibrary=EXPLICIT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'ELEMENT 1 INSTANCE PART-1-1 IS AN ELEMENT WITH TEMPERATURE DEGREES OF FREEDOM. IT REQUIRES A THERMAL CONDUCTIVITY PROPERTY DEFINITION', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST EVF IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Simple\\Simple.odb', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase failed due to errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Simple'})
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8R, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    kinematicSplit=AVERAGE_STRAIN, hourglassControl=DEFAULT, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6, elemLibrary=EXPLICIT), 
+    ElemType(elemCode=C3D4, elemLibrary=EXPLICIT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST EVF IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(STARTED, {'phase': PACKAGER_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 16668, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'There are 5 warning messages in the data (.dat) file.  Please check the data file for possible errors in the input file.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': PACKAGER_PHASE, 
+    'message': 'NO VUMAT SUBROUTINE WAS SUPPLIED FOR THE USER MATERIAL NAMED: MATERIAL-1', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': PACKAGER_PHASE, 
+    'message': 'Analysis failed due to Errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].materials['Material-1'].depvar.setValues(n=4)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+mdb.models['Model-1'].keywordBlock.replace(40, 
+    '\n*INITIAL CONDITIONS,TYPE=SOLUTION\nBILLET, 0.7, 0.0, 0.0, 0.0')
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (1.0, 
+    0.05), (10.0, 0.1)), timeSpan=STEP)
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-0.1)
+mdb.models['Model-1'].boundaryConditions['BC-5'].suppress()
+mdb.models['Model-1'].rootAssembly.Set(faces=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].faces.getSequenceFromMask(
+    ('[#2 ]', ), ), name='Set-12')
+mdb.models['Model-1'].VelocityBC(amplitude='Amp-1', createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', localCsys=None, name='BC-6', 
+    region=mdb.models['Model-1'].rootAssembly.sets['Set-12'], v1=UNSET, v2=-1.0
+    , v3=UNSET, vr1=UNSET, vr2=UNSET, vr3=UNSET)
+mdb.models['Model-1'].boundaryConditions.changeKey(fromName='BC-6', toName=
+    'Velocity')
+mdb.models['Model-1'].boundaryConditions['Velocity'].setValues(amplitude=UNSET)
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST EVF IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(STARTED, {'phase': PACKAGER_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 16204, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'There are 5 warning messages in the data (.dat) file.  Please check the data file for possible errors in the input file.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': PACKAGER_PHASE, 
+    'message': 'NO VUMAT SUBROUTINE WAS SUPPLIED FOR THE USER MATERIAL NAMED: MATERIAL-1', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': PACKAGER_PHASE, 
+    'message': 'Analysis failed due to Errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.models['Model-1'].boundaryConditions['Velocity'].setValues(amplitude=
+    'Amp-1')
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (1.0, 
+    0.05), (10.0, 1.0)), timeSpan=STEP)
+mdb.models['Model-1'].boundaryConditions['Velocity'].suppress()
+mdb.models['Model-1'].boundaryConditions['BC-5'].resume()
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-0.5)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (10.0, 
+    0.5)), timeSpan=STEP)
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=0.5)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.5, 
+    0.5)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST EVF IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(STARTED, {'phase': PACKAGER_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 14256, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'There are 5 warning messages in the data (.dat) file.  Please check the data file for possible errors in the input file.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': PACKAGER_PHASE, 
+    'message': 'NO VUMAT SUBROUTINE WAS SUPPLIED FOR THE USER MATERIAL NAMED: MATERIAL-1', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': PACKAGER_PHASE, 
+    'message': 'Analysis failed due to Errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8T, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6T, elemLibrary=EXPLICIT), 
+    ElemType(elemCode=C3D4T, elemLibrary=EXPLICIT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].materials['Material-1'].Conductivity(table=((0.0, ), ))
+mdb.models['Model-1'].materials['Material-1'].conductivity.setValues(table=((
+    50.0, ), ))
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST EVF IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(STARTED, {'phase': PACKAGER_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 16856, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'There are 5 warning messages in the data (.dat) file.  Please check the data file for possible errors in the input file.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'The elements that have both displacements and temperatures as nodal variables are used in a pure explicit dynamic analysis. The temperature degrees of freedom will be ignored.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': PACKAGER_PHASE, 
+    'message': 'NO VUMAT SUBROUTINE WAS SUPPLIED FOR THE USER MATERIAL NAMED: MATERIAL-1', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': PACKAGER_PHASE, 
+    'message': 'Analysis failed due to Errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(variables=(
+    'S', 'SVAVG', 'PE', 'PEVAVG', 'PEEQ', 'PEEQVAVG', 'LE', 'U', 'V', 'A', 
+    'RF', 'CSTRESS', 'TEMP', 'EVF', 'SDV'))
+mdb.models['Model-1'].steps['Step-1'].setValues(adiabatic=ON)
+mdb.models['Model-1'].TempDisplacementDynamicsStep(name='Step-2', previous=
+    'Step-1', timePeriod=0.5)
+del mdb.models['Model-1'].steps['Step-1']
+mdb.models['Model-1'].steps.changeKey(fromName='Step-2', toName='Step-1')
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].FieldOutputRequest(createStepName='Step-1', name=
+    'F-Output-1', variables=('S', 'SVAVG', 'MISES', 'MISESMAX', 'TSHR', 
+    'CTSHR', 'TRIAX', 'VS', 'PS', 'SFABRIC', 'SSAVG', 'MISESONLY', 'PRESSONLY', 
+    'E', 'VE', 'PE', 'PEVAVG', 'VEEQ', 'PEEQ', 'PEEQVAVG', 'PEEQT', 'PEEQMAX', 
+    'PEMAG', 'PEQC', 'NE', 'LE', 'ER', 'ERV', 'SE', 'EFABRIC', 'U', 'UT', 'UR', 
+    'V', 'VT', 'VR', 'A', 'AT', 'AR', 'RBANG', 'RBROT', 'RF', 'RT', 'RM', 'CF', 
+    'SF', 'NFORC', 'NFORCSO', 'RBFOR', 'BF', 'GRAV', 'P', 'HP', 'IWCONWEP', 
+    'TRSHR', 'TRNOR', 'VP', 'STAGP', 'SBF', 'NT', 'TEMP', 'SDV'))
+mdb.models['Model-1'].HistoryOutputRequest(createStepName='Step-1', name=
+    'H-Output-1', numIntervals=5, variables=('ALLAE', 'ALLCD', 'ALLDMD', 
+    'ALLFD', 'ALLHF', 'ALLIE', 'ALLIHE', 'ALLKE', 'ALLPD', 'ALLSE', 'ALLVD', 
+    'ALLWK', 'ALLCW', 'ALLMW', 'ALLPW', 'ETOTAL'))
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(numIntervals=
+    5)
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE REQUEST FOR MISES OUTPUT WILL BE REPLACED BY A REQUEST FOR S OUTPUT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST CTSHR IS NOT AVAILABLE FOR THIS TYPE OF ANALYSIS', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST E IS NOT AVAILABLE IN A NONLINEAR STEP -- LE (LOG STRAIN) WILL BE OUTPUT INSTEAD.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST MISESONLY IS NOT AVAILABLE FOR THIS TYPE OF ANALYSIS', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEMAG IS NOT AVAILABLE FOR THIS TYPE OF ANALYSIS', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PRESSONLY IS NOT AVAILABLE FOR THIS TYPE OF ANALYSIS', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PS IS NOT AVAILABLE FOR THIS TYPE OF ANALYSIS', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST VE IS NOT AVAILABLE FOR THIS TYPE OF ANALYSIS', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST VEEQ IS NOT AVAILABLE FOR THIS TYPE OF ANALYSIS', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST VS IS NOT AVAILABLE FOR THIS TYPE OF ANALYSIS', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST TSHR IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST NFORCSO IS NOT AVAILABLE FOR THIS TYPE OF ANALYSIS', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SE IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SF IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SSAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(STARTED, {'phase': PACKAGER_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 8656, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'There are 18 warning messages in the data (.dat) file.  Please check the data file for possible errors in the input file.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': PACKAGER_PHASE, 
+    'message': 'NO VUMAT SUBROUTINE WAS SUPPLIED FOR THE USER MATERIAL NAMED: MATERIAL-1', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': PACKAGER_PHASE, 
+    'message': 'Analysis failed due to Errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.models['Model-1'].historyOutputRequests['H-Output-1'].setValues(variables=(
+    'ALLAE', ))
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(variables=(
+    'S', 'SVAVG', 'MISES', 'MISESMAX', 'TSHR', 'CTSHR', 'TRIAX', 'VS', 'PS', 
+    'SFABRIC', 'SSAVG', 'MISESONLY', 'PRESSONLY', 'E', 'PE', 'PEEQ', 
+    'PEEQVAVG', 'PEEQT', 'PEEQMAX', 'PEMAG', 'PEQC', 'NE', 'LE', 'ER', 'ERV', 
+    'SE', 'U', 'UT', 'UR', 'V', 'VT', 'VR', 'A', 'AT', 'AR', 'RBANG', 'RBROT', 
+    'TEMP', 'SDV'))
+mdb.models['Model-1'].materials['Material-1'].SpecificHeat(table=((4.5, ), ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(numIntervals=
+    1)
+mdb.models['Model-1'].materials['Material-1'].conductivity.setValues(table=((
+    30.0, ), ))
+mdb.models['Model-1'].materials['Material-1'].specificHeat.setValues(table=((
+    580000000.0, ), ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].EncastreBC(createStepName='Step-1', localCsys=None, name=
+    'BC-1', region=mdb.models['Model-1'].rootAssembly.sets['Set-1'])
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-2', region=mdb.models['Model-1'].rootAssembly.sets['Set-2'], u1=UNSET, 
+    u2=0.0, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-3', region=mdb.models['Model-1'].rootAssembly.sets['Set-4'], u1=0.0, 
+    u2=UNSET, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-4', region=mdb.models['Model-1'].rootAssembly.sets['Set-3'], u1=UNSET, 
+    u2=UNSET, u3=0.0, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].boundaryConditions['BC-3'].setValues(region=
+    mdb.models['Model-1'].rootAssembly.sets['Set-5'])
+mdb.models['Model-1'].DisplacementBC(amplitude='Amp-1', createStepName='Step-1'
+    , distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-5', region=mdb.models['Model-1'].rootAssembly.sets['Set-7'], u1=UNSET, 
+    u2=-0.5, u3=UNSET, ur1=UNSET, ur2=UNSET, ur3=UNSET)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE REQUEST FOR MISES OUTPUT WILL BE REPLACED BY A REQUEST FOR S OUTPUT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST CTSHR IS NOT AVAILABLE FOR THIS TYPE OF ANALYSIS', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST E IS NOT AVAILABLE IN A NONLINEAR STEP -- LE (LOG STRAIN) WILL BE OUTPUT INSTEAD.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST MISESONLY IS NOT AVAILABLE FOR THIS TYPE OF ANALYSIS', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEMAG IS NOT AVAILABLE FOR THIS TYPE OF ANALYSIS', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PRESSONLY IS NOT AVAILABLE FOR THIS TYPE OF ANALYSIS', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PS IS NOT AVAILABLE FOR THIS TYPE OF ANALYSIS', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST VS IS NOT AVAILABLE FOR THIS TYPE OF ANALYSIS', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST TSHR IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SE IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SSAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(STARTED, {'phase': PACKAGER_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 16296, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'There are 14 warning messages in the data (.dat) file.  Please check the data file for possible errors in the input file.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': PACKAGER_PHASE, 
+    'message': 'NO VUMAT SUBROUTINE WAS SUPPLIED FOR THE USER MATERIAL NAMED: MATERIAL-1', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': PACKAGER_PHASE, 
+    'message': 'Analysis failed due to Errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(variables=(
+    'S', 'SVAVG', 'PE', 'PEVAVG', 'PEEQ', 'PEEQVAVG', 'LE', 'U', 'V', 'A', 
+    'RF', 'CSTRESS', 'NT', 'TEMP', 'HFL', 'RFL', 'EVF', 'SDV'))
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=5.0)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (5.0, 
+    0.5)), timeSpan=STEP)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.5, 
+    0.5)), timeSpan=STEP)
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=0.5)
+mdb.models['Model-1'].materials['Material-1'].specificHeat.setValues(table=((
+    5800000.0, ), ))
+mdb.models['Model-1'].materials['Material-1'].specificHeat.setValues(table=((
+    580000000.0, ), ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+del mdb.models['Model-1'].materials['Material-1'].specificHeat
+mdb.models['Model-1'].materials['Material-1'].SpecificHeat(table=((580000000.0, 
+    ), ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].materials['Material-1'].specificHeat.setValues(table=((
+    580.0, ), ))
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(numIntervals=
+    1)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].historyOutputRequests['H-Output-1'].setValues(
+    numIntervals=5)
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(timeInterval=
+    0.01)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].materials['Material-1'].specificHeat.setValues(table=((
+    580000.0, ), ))
+mdb.models['Model-1'].materials['Material-1'].specificHeat.setValues(table=((
+    58.0, ), ))
+mdb.models['Model-1'].materials['Material-1'].specificHeat.setValues(table=((
+    580000000.0, ), ))
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8RT, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    kinematicSplit=AVERAGE_STRAIN, hourglassControl=STIFFNESS, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6T, elemLibrary=EXPLICIT), 
+    ElemType(elemCode=C3D4T, elemLibrary=EXPLICIT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8RT, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    kinematicSplit=AVERAGE_STRAIN, hourglassControl=STIFFNESS, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6T, elemLibrary=EXPLICIT), 
+    ElemType(elemCode=C3D4T, elemLibrary=EXPLICIT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=5.0)
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(timeInterval=
+    0.2)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.5, 
+    0.01), (5.0, 0.5)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=0.5)
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=0.1)
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-0.1)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.1, 
+    0.1)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(timeInterval=
+    0.01)
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-0.5)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (1.0, 
+    0.01), (10.0, 0.5)), timeSpan=STEP)
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=10.0)
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(timeInterval=
+    0.5)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.4)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.5)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE PARAMETER HOURGLASS ON THE *SECTION CONTROLS OPTION IS RELEVANT FOR SOLID, MEMBRANE, AND SHELL ELEMENTS WITH REDUCED INTEGRATION WHEREVER APPLICABLE. THIS WARNING CAN BE IGNORED IF THE FEATURE IS APPLIED TO THESE ELEMENT TYPES ONLY.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST EVF IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(STARTED, {'phase': PACKAGER_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 7416, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'There are 6 warning messages in the data (.dat) file.  Please check the data file for possible errors in the input file.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': PACKAGER_PHASE, 
+    'message': 'NO VUMAT SUBROUTINE WAS SUPPLIED FOR THE USER MATERIAL NAMED: MATERIAL-1', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': PACKAGER_PHASE, 
+    'message': 'Analysis failed due to Errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.1, 
+    0.0001), (10.0, 1.0)), timeSpan=STEP)
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE PARAMETER HOURGLASS ON THE *SECTION CONTROLS OPTION IS RELEVANT FOR SOLID, MEMBRANE, AND SHELL ELEMENTS WITH REDUCED INTEGRATION WHEREVER APPLICABLE. THIS WARNING CAN BE IGNORED IF THE FEATURE IS APPLIED TO THESE ELEMENT TYPES ONLY.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST EVF IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(STARTED, {'phase': PACKAGER_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 11044, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'There are 6 warning messages in the data (.dat) file.  Please check the data file for possible errors in the input file.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': PACKAGER_PHASE, 
+    'message': 'NO VUMAT SUBROUTINE WAS SUPPLIED FOR THE USER MATERIAL NAMED: MATERIAL-1', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': PACKAGER_PHASE, 
+    'message': 'Analysis failed due to Errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.models['Model-1'].steps['Step-1'].setValues(scaleFactor=1.0, 
+    timeIncrementationMethod=FIXED_EBE)
+mdb.models['Model-1'].steps['Step-1'].setValues(timeIncrementationMethod=
+    FIXED_USER_DEFINED_INC, userDefinedInc=1e-10)
+mdb.models['Model-1'].steps['Step-1'].setValues(massScaling=((SEMI_AUTOMATIC, 
+    MODEL, AT_BEGINNING, 10.0, 0.0, None, 0, 0, 0.0, 0.0, 0, None), ), 
+    userDefinedInc=1e-10)
+mdb.models['Model-1'].steps['Step-1'].setValues(maxIncrement=None, scaleFactor=
+    1.0, timeIncrementationMethod=AUTOMATIC_GLOBAL)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].steps['Step-1'].setValues(timeIncrementationMethod=
+    FIXED_USER_DEFINED_INC, userDefinedInc=1e-09)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].steps['Step-1'].setValues(userDefinedInc=1e-10)
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(timeInterval=
+    EVERY_TIME_INCREMENT)
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(numIntervals=
+    1)
+mdb.models['Model-1'].steps['Step-1'].setValues(massScaling=PREVIOUS_STEP, 
+    maxIncrement=None, scaleFactor=1.0, timeIncrementationMethod=
+    AUTOMATIC_GLOBAL)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8RT, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    kinematicSplit=AVERAGE_STRAIN, hourglassControl=STIFFNESS, 
+    distortionControl=ON, lengthRatio=0.100000001490116), ElemType(
+    elemCode=C3D6T, elemLibrary=EXPLICIT), ElemType(elemCode=C3D4T, 
+    elemLibrary=EXPLICIT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE PARAMETER HOURGLASS ON THE *SECTION CONTROLS OPTION IS RELEVANT FOR SOLID, MEMBRANE, AND SHELL ELEMENTS WITH REDUCED INTEGRATION WHEREVER APPLICABLE. THIS WARNING CAN BE IGNORED IF THE FEATURE IS APPLIED TO THESE ELEMENT TYPES ONLY.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE PARAMETER DISTORTION CONTROL ON THE *SECTION CONTROLS OPTION IS RELEVANT FOR SOLID ELEMENTS WHEREVER APPLICABLE. THIS WARNING CAN BE IGNORED IF THE FEATURE IS APPLIED TO SOLID ELEMENTS ONLY.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST EVF IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(STARTED, {'phase': PACKAGER_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 3464, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'There are 7 warning messages in the data (.dat) file.  Please check the data file for possible errors in the input file.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': PACKAGER_PHASE, 
+    'message': 'NO VUMAT SUBROUTINE WAS SUPPLIED FOR THE USER MATERIAL NAMED: MATERIAL-1', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': PACKAGER_PHASE, 
+    'message': 'Analysis failed due to Errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8RT, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    kinematicSplit=AVERAGE_STRAIN, hourglassControl=DEFAULT, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6T, elemLibrary=EXPLICIT), 
+    ElemType(elemCode=C3D4T, elemLibrary=EXPLICIT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST EVF IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(STARTED, {'phase': PACKAGER_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 4248, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'There are 5 warning messages in the data (.dat) file.  Please check the data file for possible errors in the input file.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': PACKAGER_PHASE, 
+    'message': 'NO VUMAT SUBROUTINE WAS SUPPLIED FOR THE USER MATERIAL NAMED: MATERIAL-1', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': PACKAGER_PHASE, 
+    'message': 'Analysis failed due to Errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-0.1)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8RT, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    kinematicSplit=AVERAGE_STRAIN, hourglassControl=STIFFNESS, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6T, elemLibrary=EXPLICIT), 
+    ElemType(elemCode=C3D4T, elemLibrary=EXPLICIT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.1)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.01)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.5)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-0.5)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.1, 
+    1e-07), (10.0, 1.0)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.1, 
+    1e-06), (10.0, 1.0)), timeSpan=STEP)
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=0.5)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-0.5)
+mdb.models['Model-1'].steps['Step-1'].setValues(massScaling=((SEMI_AUTOMATIC, 
+    MODEL, AT_BEGINNING, 100.0, 0.0, None, 0, 0, 0.0, 0.0, 0, None), ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].steps['Step-1'].setValues(massScaling=PREVIOUS_STEP)
+mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8T, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6T, elemLibrary=EXPLICIT), 
+    ElemType(elemCode=C3D4T, elemLibrary=EXPLICIT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8RT, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    kinematicSplit=AVERAGE_STRAIN, hourglassControl=STIFFNESS, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6T, elemLibrary=EXPLICIT), 
+    ElemType(elemCode=C3D4T, elemLibrary=EXPLICIT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ))
+mdb.models['Model-1'].rootAssembly.setMeshControls(elemShape=HEX_DOMINATED, 
+    regions=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ))
+mdb.models['Model-1'].rootAssembly.setMeshControls(elemShape=TET, regions=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), technique=FREE)
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=UNKNOWN_HEX, elemLibrary=EXPLICIT), ElemType(
+    elemCode=UNKNOWN_WEDGE, elemLibrary=EXPLICIT), ElemType(elemCode=C3D10MT, 
+    elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, hourglassControl=DEFAULT, 
+    distortionControl=DEFAULT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8RT, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    kinematicSplit=AVERAGE_STRAIN, hourglassControl=STIFFNESS, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6T, elemLibrary=EXPLICIT), 
+    ElemType(elemCode=C3D4T, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    distortionControl=DEFAULT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ))
+mdb.models['Model-1'].rootAssembly.setMeshControls(elemShape=HEX, regions=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), technique=STRUCTURED)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=1.0)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-0.1)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE PARAMETER HOURGLASS ON THE *SECTION CONTROLS OPTION IS RELEVANT FOR SOLID, MEMBRANE, AND SHELL ELEMENTS WITH REDUCED INTEGRATION WHEREVER APPLICABLE. THIS WARNING CAN BE IGNORED IF THE FEATURE IS APPLIED TO THESE ELEMENT TYPES ONLY.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST EVF IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8RT', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(STARTED, {'phase': PACKAGER_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 7952, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'There are 6 warning messages in the data (.dat) file.  Please check the data file for possible errors in the input file.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': PACKAGER_PHASE, 
+    'message': 'NO VUMAT SUBROUTINE WAS SUPPLIED FOR THE USER MATERIAL NAMED: MATERIAL-1', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': PACKAGER_PHASE, 
+    'message': 'Analysis failed due to Errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=1.0)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.1, 
+    1e-06), (1.0, 1.0)), timeSpan=STEP)
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-0.5)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(timeInterval=
+    1e-08)
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(timeInterval=
+    1e-06)
+mdb.models['Model-1'].materials['Material-1'].depvar.setValues(n=1)
+mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+mdb.models['Model-1'].keywordBlock.replace(46, 
+    '\n*INITIAL CONDITIONS,TYPE=SOLUTION\nBILLET, 0.7')
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(timeInterval=
+    0.01)
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=10.0)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.01, 
+    0.0001), (10.0, 1.0)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.5)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=1.0)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (10.0, 
+    1.0)), timeSpan=STEP)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.5, 
+    1.0)), timeSpan=STEP)
+mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(timeInterval=
+    0.02)
+mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+mdb.models['Model-1'].keywordBlock.replace(46, 
+    '\n*INITIAL CONDITIONS,TYPE=SOLUTION\nBILLET, 0.701')
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-0.1)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.1, 
+    1.0)), timeSpan=STEP)
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=0.1)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (10.0, 
+    1.0)), timeSpan=STEP)
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=10.0)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-0.5)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (1.0, 
+    0.1), (10.0, 1.0)), timeSpan=STEP)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.1, 
+    0.1), (0.5, 1.0)), timeSpan=STEP)
+mdb.models['Model-1'].steps['Step-1'].setValues(timePeriod=0.5)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.5, 
+    1.0)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+mdb.models['Model-1'].materials['Material-1'].depvar.setValues(n=2)
+mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+mdb.models['Model-1'].keywordBlock.replace(46, 
+    '\n*INITIAL CONDITIONS,TYPE=SOLUTION\nBILLET, 0.701,0.0')
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.5)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.2)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].steps['Step-1'].setValues(massScaling=((SEMI_AUTOMATIC, 
+    MODEL, AT_BEGINNING, 0.1, 0.0, None, 0, 0, 0.0, 0.0, 0, None), ))
+mdb.models['Model-1'].steps['Step-1'].setValues(massScaling=((SEMI_AUTOMATIC, 
+    MODEL, AT_BEGINNING, 2.0, 0.0, None, 0, 0, 0.0, 0.0, 0, None), ))
+mdb.models['Model-1'].steps['Step-1'].setValues(massScaling=((SEMI_AUTOMATIC, 
+    MODEL, AT_BEGINNING, 10.0, 0.0, None, 0, 0, 0.0, 0.0, 0, None), ))
+mdb.models['Model-1'].steps['Step-1'].setValues(massScaling=PREVIOUS_STEP)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.05, 
+    0.001), (0.5, 1.0)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=1.0)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.4)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+mdb.models['Model-1'].materials['Material-1'].density.setValues(table=((8e-07, 
+    ), ))
+mdb.models['Model-1'].materials['Material-1'].density.setValues(table=((8e-06, 
+    ), ))
+mdb.models['Model-1'].materials['Material-1'].density.setValues(table=((8e-12, 
+    ), ))
+mdb.models['Model-1'].materials['Material-1'].density.setValues(table=((8e-09, 
+    ), ))
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.05, 
+    1e-07), (0.5, 1.0)), timeSpan=STEP)
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.5)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.1, 
+    1e-10), (0.5, 1.0)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.1, 
+    0.001), (0.5, 1.0)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.1, 
+    0.01), (0.5, 1.0)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=1.0)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+mdb.models['Model-1'].keywordBlock.replace(46, 
+    '\n*INITIAL CONDITIONS,TYPE=SOLUTION\nBILLET, 0.701,35.0')
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.5)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=1.0)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.5)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=1.0)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.5)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=1.0)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8RT, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    kinematicSplit=AVERAGE_STRAIN, hourglassControl=DEFAULT, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6T, elemLibrary=EXPLICIT), 
+    ElemType(elemCode=C3D4T, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    distortionControl=DEFAULT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.5)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8T, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6T, elemLibrary=EXPLICIT), 
+    ElemType(elemCode=C3D4T, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    distortionControl=DEFAULT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST EVF IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8T', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(COMPLETED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase complete', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(STARTED, {'phase': PACKAGER_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 13056, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'There are 5 warning messages in the data (.dat) file.  Please check the data file for possible errors in the input file.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': PACKAGER_PHASE, 
+    'message': 'A material defined in user subroutine VUMAT must be defined as purely elastic (using the initial elastic modulus) at the beginning of the analysis (stepTime=0). This is an informative message. It does not necessarily indicate that user subroutine VUMAT is incorrectly defined.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': PACKAGER_PHASE, 
+    'message': 'NO VUMAT SUBROUTINE WAS SUPPLIED FOR THE USER MATERIAL NAMED: MATERIAL-1', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': PACKAGER_PHASE, 
+    'message': 'Analysis failed due to Errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Abaqus/Explicit Packager exited with an error - Please see the  status file for possible error messages if the file exists.', 
+    'jobName': 'Simple'})
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8R, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    kinematicSplit=AVERAGE_STRAIN, hourglassControl=STIFFNESS, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6, elemLibrary=EXPLICIT), 
+    ElemType(elemCode=C3D4, elemLibrary=EXPLICIT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+mdb.jobs['Simple'].submit(consistencyChecking=OFF, datacheckJob=True)
+mdb.jobs['Simple']._Message(STARTED, {'phase': BATCHPRE_PHASE, 
+    'clientHost': 'me-szarecha', 'handle': 0, 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE PARAMETER HOURGLASS ON THE *SECTION CONTROLS OPTION IS RELEVANT FOR SOLID, MEMBRANE, AND SHELL ELEMENTS WITH REDUCED INTEGRATION WHEREVER APPLICABLE. THIS WARNING CAN BE IGNORED IF THE FEATURE IS APPLIED TO THESE ELEMENT TYPES ONLY.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {'phase': BATCHPRE_PHASE, 
+    'message': 'DEGREE OF FREEDOM 11 AND AT LEAST ONE OF DEGREES OF FREEDOM 1 THRU 6 MUST BE ACTIVE IN THE MODEL FOR *DYNAMIC TEMP-DISP. CHECK THE PROCEDURE AND ELEMENT TYPES USED IN THIS MODEL.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT VARIABLE RFL HAS NO COMPONENTS IN THIS ANALYSIS', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST EVF IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST HFL IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEEQVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST PEVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'OUTPUT REQUEST SVAVG IS NOT AVAILABLE FOR ELEMENT TYPE C3D8R', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(WARNING, {'phase': BATCHPRE_PHASE, 
+    'message': 'THE OPTION *BOUNDARY,TYPE=DISPLACEMENT HAS BEEN USED; CHECK STATUS FILE BETWEEN STEPS FOR WARNINGS ON ANY JUMPS PRESCRIBED ACROSS THE STEPS IN DISPLACEMENT VALUES OF TRANSLATIONAL DOF. FOR ROTATIONAL DOF MAKE SURE THAT THERE ARE NO SUCH JUMPS. ALL JUMPS IN DISPLACEMENTS ACROSS STEPS ARE IGNORED', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ODB_FILE, {'phase': BATCHPRE_PHASE, 
+    'file': 'C:\\temp\\Simple\\TEMP\\Mixed\\Simple.odb', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ABORTED, {'phase': BATCHPRE_PHASE, 
+    'message': 'Analysis phase failed due to errors', 'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(ERROR, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Simple'})
+mdb.jobs['Simple']._Message(JOB_ABORTED, {
+    'message': 'Analysis Input File Processor exited with an error.', 
+    'jobName': 'Simple'})
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8RT, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    kinematicSplit=AVERAGE_STRAIN, hourglassControl=ENHANCED, 
+    distortionControl=ON, lengthRatio=0.100000001490116), ElemType(
+    elemCode=C3D6T, elemLibrary=EXPLICIT), ElemType(elemCode=C3D4T, 
+    elemLibrary=EXPLICIT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+mdb.models['Model-1'].rootAssembly.setElementType(elemTypes=(ElemType(
+    elemCode=C3D8RT, elemLibrary=EXPLICIT, secondOrderAccuracy=OFF, 
+    kinematicSplit=AVERAGE_STRAIN, hourglassControl=STIFFNESS, 
+    distortionControl=DEFAULT), ElemType(elemCode=C3D6T, elemLibrary=EXPLICIT), 
+    ElemType(elemCode=C3D4T, elemLibrary=EXPLICIT)), regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ), ))
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=0.1)
+mdb.models['Model-1'].boundaryConditions['BC-5'].setValues(u2=-0.1)
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.2)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.5)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.1, 
+    0.01)), timeSpan=STEP)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (0.1, 
+    0.1)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].steps['Step-1'].setValues(maxIncrement=None, scaleFactor=
+    1.0, timeIncrementationMethod=AUTOMATIC_EBE, timePeriod=10.0)
+mdb.models['Model-1'].amplitudes['Amp-1'].setValues(data=((0.0, 0.0), (10.0, 
+    1.0)), timeSpan=STEP)
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].setValues(absoluteZero=-273, stefanBoltzmann=5e-11)
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.8)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.7)
+mdb.models['Model-1'].rootAssembly.seedPartInstance(deviationFactor=0.1, 
+    minSizeFactor=0.1, regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ), size=0.6)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ))
+mdb.models['Model-1'].rootAssembly.seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#10 ]', ), ), number=2)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteSeeds(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#2 ]', ), ), number=2)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ))
+mdb.models['Model-1'].rootAssembly.deleteSeeds(regions=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#f ]', ), ))
+mdb.models['Model-1'].rootAssembly.seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#fff ]', ), ), number=1)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ))
+mdb.models['Model-1'].rootAssembly.deleteSeeds(regions=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#f ]', ), ))
+mdb.models['Model-1'].rootAssembly.deleteSeeds(regions=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#fff ]', ), ))
+mdb.models['Model-1'].rootAssembly.seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#1 ]', ), ), number=1)
+mdb.models['Model-1'].rootAssembly.seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#2 ]', ), ), number=2)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ))
+mdb.models['Model-1'].rootAssembly.deleteSeeds(regions=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#fff ]', ), ))
+mdb.models['Model-1'].rootAssembly.seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#2 ]', ), ), number=2)
+mdb.models['Model-1'].rootAssembly.seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#4 ]', ), ), number=1)
+mdb.models['Model-1'].rootAssembly.seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#8 ]', ), ), number=2)
+mdb.models['Model-1'].rootAssembly.seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#1 ]', ), ), number=1)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+mdb.models['Model-1'].rootAssembly.deleteMesh(regions=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].cells.getSequenceFromMask(
+    ('[#1 ]', ), ))
+mdb.models['Model-1'].rootAssembly.deleteSeeds(regions=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#fff ]', ), ))
+mdb.models['Model-1'].rootAssembly.seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#40 ]', ), ), number=2)
+mdb.models['Model-1'].rootAssembly.seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#10 ]', ), ), number=2)
+mdb.models['Model-1'].rootAssembly.seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#20 ]', ), ), number=1)
+mdb.models['Model-1'].rootAssembly.seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#2 ]', ), ), number=1)
+mdb.models['Model-1'].rootAssembly.seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#800 ]', ), ), number=2)
+mdb.models['Model-1'].rootAssembly.seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#200 ]', ), ), number=1)
+mdb.models['Model-1'].rootAssembly.seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.getSequenceFromMask(
+    ('[#4 ]', ), ), number=1)
+mdb.models['Model-1'].rootAssembly.generateMesh(regions=(
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'], ))
+# Save by szarecha on 2017_09_08-14.33.32; build 2016 2015_09_24-21.31.09 126547
