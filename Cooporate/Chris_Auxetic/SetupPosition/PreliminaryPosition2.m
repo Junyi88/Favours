@@ -1,0 +1,84 @@
+clear;
+
+H=17.75;
+L=11.0;
+h=5.5;
+
+dx=0;
+dy=0;
+dz=0;
+
+MyLat.Geo.H=H;
+MyLat.Geo.L=L;
+MyLat.Geo.h=h;
+
+MyLat.Geo.dx=dx;
+MyLat.Geo.dy=dy;
+MyLat.Geo.dz=dz;
+%%
+MyLat.Geo.x=[-L./2 0 L./2]+MyLat.Geo.dx;
+MyLat.Geo.y=[-L./2 0 L./2]+MyLat.Geo.dy;
+MyLat.Geo.z=[-H./2 (-H./2+h) 0 H./2-h H./2]+MyLat.Geo.dz;
+
+%%
+MyLat.Lat.orderX=1+[2 2 2 1 1 1 0 0 0,...
+    2 1 1 0, ...
+    2 2 0 0, ...
+    2 1 1 0, ...
+    2 2 2 1 1 1 0 0 0 ...
+    ].';
+
+MyLat.Lat.orderY=1+[0 1 2 0 1 2 0 1 2, ...
+    1 0 2 1,...
+    0 2 0 2,...
+    1 0 2 1,...
+    0 1 2 0 1 2 0 1 2].';
+MyLat.Lat.orderZ=1+[zeros(1,9),...
+    1.*ones(1,4),...
+    2.*ones(1,4),...
+    3.*ones(1,4),...
+    4.*ones(1,9),...
+    ].';
+
+%%
+
+MyLat.Nodes=zeros(30,3);
+
+for n1=1:30
+   MyLat.Nodes(n1,1)=MyLat.Geo.x(MyLat.Lat.orderX(n1)); 
+   MyLat.Nodes(n1,2)=MyLat.Geo.y(MyLat.Lat.orderY(n1)); 
+   MyLat.Nodes(n1,3)=MyLat.Geo.z(MyLat.Lat.orderZ(n1)); 
+end
+
+figure(1);
+clf;
+hold on;
+plot3(MyLat.Nodes(:,1),MyLat.Nodes(:,2),MyLat.Nodes(:,3),'bo');
+axis equal;
+
+%%
+MyLat.Cells(1).P=[1 14; 1 10; 2 10; 1 11; 4 11; 5 10; 5 11];
+MyLat.Cells(2).P=[3 15; 3 10; 2 10; 3 12; 6 12; 5 10; 5 12];
+MyLat.Cells(3).P=[7 16; 7 13; 8 13; 7 11; 4 11; 5 13; 5 11];
+MyLat.Cells(4).P=[9 17; 9 13; 8 13; 9 12; 6 12; 5 13; 5 12];
+MyLat.Cells(5).P=[22 14; 22 18; 23 18; 22 19; 25 19; 26 19; 26 21];
+MyLat.Cells(6).P=[24 15; 23 18; 24 18; 24 20; 27 20; 26 18; 26 20];
+MyLat.Cells(7).P=[28 16; 28 21; 29 21; 28 19; 25 19; 26 19; 26 21];
+MyLat.Cells(8).P=[30 17; 30 21; 29 21; 30 20; 27 20; 26 21; 26 20];
+
+%%
+figure(1);
+hold on;
+
+lineSp='k-';
+for n2=1:8
+for n1=1:7
+    MyLat.Cells(n2).XX=[MyLat.Nodes(MyLat.Cells(n2).P(n1,1),1) ...
+        MyLat.Nodes(MyLat.Cells(n2).P(n1,2),1)];
+    MyLat.Cells(n2).YY=[MyLat.Nodes(MyLat.Cells(n2).P(n1,1),2) ...
+        MyLat.Nodes(MyLat.Cells(n2).P(n1,2),2)];
+    MyLat.Cells(n2).ZZ=[MyLat.Nodes(MyLat.Cells(n2).P(n1,1),3) ...
+        MyLat.Nodes(MyLat.Cells(n2).P(n1,2),3)];
+    plot3(MyLat.Cells(n2).XX,MyLat.Cells(n2).YY,MyLat.Cells(n2).ZZ,lineSp);
+end
+end
