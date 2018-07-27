@@ -260,6 +260,15 @@ clf;
 hold on;
 plot3(Latt.Nodes(:,1),Latt.Nodes(:,2),Latt.Nodes(:,3),'ro','MarkerFaceColor','r');
 
+for n1=1:length(Latt.Nodes)
+%    if ~Latt.ExtraStrut(n1)
+   XX=Latt.Nodes(n1,1);
+   YY=Latt.Nodes(n1,2);
+   ZZ=Latt.Nodes(n1,3);
+   text(XX.*1.05,YY.*1.05,ZZ.*1.05,num2str(n1));
+%    end
+end
+
 axis equal;
 
 for n1=1:length(Latt.Struts)
@@ -271,6 +280,58 @@ for n1=1:length(Latt.Struts)
 %    end
 end
 
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+%% ------------------------------
+% Convert to mesh
+% Nodes
+for n1=1:length(Latt.Nodes)
+   Mesh.Node(n1).N=Latt.Nodes(n1,:).';
+end
+
+%%
+Pr2.Mt.YM=115e3;
+Pr2.Mt.nu=0.33;
+
+Pr2.Ge.r=1.15;
+Pr2.Mt.G=Pr2.Mt.YM./(2.*(1+Pr2.Mt.nu));
+Pr2.Ge.kappa=6.*(1+Pr2.Mt.nu)./(7+Pr2.Mt.nu);
+
+Pr2.Ge.Jtor=2.*(Pr2.Ge.r.^4)./12;
+Pr2.Ge.I=(Pr2.Ge.r.^4)./12;
+Pr2.Ge.A=(Pr2.Ge.r.^2);
+
+
+Pr2.Mt.YS=1119;
+Pr2.Mt.rho=(4430./1000).*((1e-3).^3);
+Sc(1).Pr=Pr2;
+l=26; 
+
+%%
+for n1=1:length(Latt.Struts)
+   Mesh.Element(n1).Ps=Latt.Struts(n1,:);
+   Mesh.Element(n1).Sc=1;
+   Mesh.El(n1).Pr=Pr2;
+end
+
+Mesh.Prep=Latt.Prep;
+
+save MyMesh Mesh Sc;
+
+figure(10);
+clf;
+hold on;
+
+for n1=1:length(Mesh.Node)
+   x=Mesh.Node(n1).N(1);
+   y=Mesh.Node(n1).N(2);
+   z=Mesh.Node(n1).N(3);
+   plot3(x,y,z,'ro','MarkerFaceColor','r');
+end
+
+axis equal;
 xlabel('x');
 ylabel('y');
 zlabel('z');

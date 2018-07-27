@@ -200,7 +200,7 @@ for nLayer=1:5
        Latt.Struts(nStrut,:)=[P1 P2];
        Latt.ExtraStrut(nStrut)=Latt.Prep.Layer(LayerType).ExtraStrut(nS);
 %        Latt.EdgeStrut(nStrut)=Latt.Prep.Layer(LayerType).EdgeStrut(nS);
-       if ny==5
+       if nLayer==5
            Latt.EdgeStrut(nStrut)=true;
        end
        
