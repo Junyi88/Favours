@@ -214,7 +214,7 @@ for nLayer=1:5
    end
 end
 
-removeExtra=true;
+removeExtra=false;
 removeEdge=true;
 
 Latt.StrutsFull=Latt.Struts;
@@ -276,7 +276,7 @@ for n1=1:length(Latt.Struts)
    XX=Latt.Nodes(Latt.Struts(n1,:),1);
    YY=Latt.Nodes(Latt.Struts(n1,:),2);
    ZZ=Latt.Nodes(Latt.Struts(n1,:),3);
-   plot3(XX,YY,ZZ,'b-');
+   plot3(XX,YY,ZZ,'b-','LineWidth',2);
 %    end
 end
 

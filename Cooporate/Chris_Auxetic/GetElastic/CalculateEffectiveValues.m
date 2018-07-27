@@ -59,3 +59,8 @@ axis equal;
 xlabel('x');
 ylabel('y');
 zlabel('z');
+
+%%
+
+[ValuesNoStrut]=GetYoungsPoisson(OutNoStrut.Eff.KEp);
+[ValuesStrut]=GetYoungsPoisson(OutStrut.Eff.KEp);
