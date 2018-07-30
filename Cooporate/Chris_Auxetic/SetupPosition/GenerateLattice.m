@@ -239,7 +239,7 @@ nNode=0;
        end
     end
 Latt.Nodes=Latt.Nodes(NodeKeep,:);
-
+Latt.Prep.NodePointsKeep=Latt.Prep.NodePoints(NodeKeep,:);
     for n1=1:length(Latt.Struts)
        Latt.Struts(n1,1)=NewNodeNum(Latt.Struts(n1,1));
        Latt.Struts(n1,2)=NewNodeNum(Latt.Struts(n1,2));
