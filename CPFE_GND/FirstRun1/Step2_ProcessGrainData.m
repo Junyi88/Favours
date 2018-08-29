@@ -1,7 +1,7 @@
 clear;
 
 %% User Input Parameter
-GrainSmoothFactor = 0; % This is a factor used to smooth the grains
+GrainSmoothFactor = 2; % This is a factor used to smooth the grains
 
 
 %% Load Previous Step Data
@@ -19,10 +19,48 @@ We then find the loop of lines for each chain
 %} 
 
 for nG=1:size(grains,1)
-    [sGB(nG).Chain]=GetChainGB(grains(nG).boundary,nG);
+    [sGB0(nG).Sets]=GetChainGB(grains(nG).boundary,nG); 
+    %sGB0 is because we want to remove the inner boundaries later
 end
 
-nG=18;
+%% Now we remove the internal boundaries
+% DANGER:Assumption: We assume that the inner boundary has a lower size
+% compared to the outer boundaries
+
+for nG=1:size(grains,1)
+    [sGB0(nG).Sets]=GetChainGB(grains(nG).boundary,nG); 
+    %sGB0 is because we want to remove the inner boundaries later
+end
+
+for n1=1:size(sGB0,2)
+
+    SetSize=zeros(length(sGB0(n1).Sets),1);
+    for n2=1:length(sGB0(n1).Sets)
+        SetSize(n2)=length(sGB0(n1).Sets(n2).Chain);
+    end
+    [~,n2]=max(SetSize);
+    sGB(n1).Chain=sGB0(n1).Sets(n2).Chain;
+    
+end
+
+%%
+F=grains(nG).boundary.F;
+V=grains(nG).boundary.V;
+figure(100);
+clf;
+hold on;
+
+for n1=1:size(sGB,2)
+
+        x=V(sGB(n1).Chain,1);
+        y=V(sGB(n1).Chain,2);
+        plot(x,y,'rs-')
+
+    
+end
+
+%%
+nG=26;
 figure(30);
 clf;
 hold on;
@@ -36,6 +74,39 @@ for n1=1:size(F,1)
 end
 
 
+%%
+figure(100);
+clf;
+hold on;
+
+for n1=1:size(sGB,2)
+    St=sGB(n1).Sets;
+    for n2=1:length(St)
+        x=V(St(n2).Chain,1);
+        y=V(St(n2).Chain,2);
+        plot(x,y,'rs-')
+    end
+    
+end
+
+%%
+figure(101);
+clf;
+hold on;
+
+for n1=1:size(sGB,2)
+    St=sGB(n1).Sets;
+    sz=zeros(length(St),1);
+    for n2=1:length(St)
+        sz(n2)=length(St(n2).Chain);
+    end
+    [~,n2]=max(sz);
+    x=V(St(n2).Chain,1);
+    y=V(St(n2).Chain,2);
+    plot(x,y,'bx-');
+end
+
+%%
 
 % First 
 nG=15;
