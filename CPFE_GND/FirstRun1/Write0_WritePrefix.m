@@ -46,21 +46,21 @@ for n1=1:length(PreambleText)
     fprintf(fileID,PreambleText{n1});
 end
 
-fprintf(fileID,SketchText,200);
-fprintf(fileID,PlaneText,0,0,5,5);
+fprintf(fileID,SketchText,200); % [SheetSize]
+fprintf(fileID,PlaneText,0,0,5,5);  % [MinX,MinY,MaxX,MaxY]
 fprintf(fileID,PartText);
 fprintf(fileID,SetPartText);
-fprintf(fileID,ExtrudeText,1);
-fprintf(fileID,DelSketchText,1);
+fprintf(fileID,ExtrudeText,1); %[Depth]
+fprintf(fileID,DelSketchText);
 fprintf(fileID,' \n');
 fclose(fileID);
 
 %--------------------
 
 
-vP.DatumPointByCoordinate(coords=( 417.45664354525684, 25.27312259739948, 55.22718146493581 ))
-vP.DatumPointByCoordinate(coords=( 488.65113801855256, 30.34793826668001, 101.02028944742439 ))
-vP.DatumPointByCoordinate(coords=( 498.44664721887602, -0.00000000000000, 109.84859549549830 ))
+vP.DatumPointByCoordinate(coords=( 0, 1, 0 ))
+vP.DatumPointByCoordinate(coords=( 0, 2, 0 ))
+vP.DatumPointByCoordinate(coords=( 0, 1, 1 ))
 vP.DatumPlaneByThreePoints( point1=vP.datums[2], point2=vP.datums[3], point3=vP.datums[4])
 vP.DatumAxisByTwoPoint(point1=vP.datums[2], point2=vP.datums[3])
 mdb.models['Model-1'].ConstrainedSketch(gridSpacing=0.12, name='__profile__',sheetSize=5.02,
