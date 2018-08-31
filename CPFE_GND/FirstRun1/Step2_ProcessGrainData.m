@@ -54,13 +54,139 @@ RedundantGrain=zeros(length(sGB0),1);
 for n1=1:size(sGB0,2)
    
     f=sGB(n1).Chain;
-    t=Taken(f);
-    if sum(t)>0
-        RedundantGrain(n1)=1;
+    f=[f f(1)];
+    sGB(n1).Cut=zeros(length(f)-1,1);
+    
+    for n2=1:length(f)-1
+        f0=f(n2);
+        f1=f(n2+1);
+        [row,col]=find(F==f0);
+        for n3=1:length(row)
+           
+            r=row(n3);
+            c=col(n3);
+            
+            if c==1
+                f1c=F(r,2);
+            elseif c==2
+                f1c=F(r,1);
+            end
+            
+            if f1c==f1
+                if Taken(r)==1
+                    sGB(n1).Cut(n2)=1;
+                else 
+                    Taken(r)=1;
+                end
+                
+            end
+            
+        end
+        
+    end
+    
+end
+
+%%
+VXmin=0;%min(V(:,1));
+VXmax=760;max(V(:,1));
+VYmin=0;%min(V(:,2));
+VYmax=567;max(V(:,2));
+
+VXmin=min(V(:,1));
+VXmax=max(V(:,1));
+VYmin=min(V(:,2));
+VYmax=max(V(:,2));
+
+for n1=1:size(sGB0,2)
+    f=sGB(n1).Chain;
+    f=[f f(1)];
+    count=0;
+    sGB(n1).ToExt=zeros(length(sGB(n1).Cut),2);
+    
+    for n2=1:length(sGB(n1).Cut)
+        
+        if (sGB(n1).Cut(n2)~=1)
+            NotEdge=true;
+            x=V(f(n2),1);
+            y=V(f(n2),2);
+            if (x<=VXmin)||(x>=VXmax)||(y<=VYmin)||(y>=VYmax)
+                NotEdge=false;
+            end
+            x=V(f(n2+1),1);
+            y=V(f(n2+1),2);
+            if (x<=VXmin)||(x>=VXmax)||(y<=VYmin)||(y>=VYmax)
+                NotEdge=false;
+            end
+            
+           if NotEdge
+               count=count+1;
+               sGB(n1).ToExt(count,:)=[f(n2),f(n2+1)];
+           end
+        end
+        sGB(n1).ToExt=sGB(n1).ToExt(1:count,:);
+    end
+    
+    
+end
+
+%%
+for n1=1:size(sGB0,2)
+%     sGB(n1).ToExt=zeros(length(sGB(n1).Cut),2);
+    
+    SCount=0;
+    f0=-1;
+    
+    PCount=0;
+    HIT=0;
+    for n2=1:size(sGB(n1).ToExt,1)
+       
+        if f0==sGB(n1).ToExt(n2,1)
+            PCount=PCount+1;
+            NewChain.Grain(n1).Set(SCount).Chain(PCount)=f0; %sGB(n1).ToExt(n2,2);
+            f0=sGB(n1).ToExt(n2,2);
+        else
+            
+            if SCount>=1
+                PCount=PCount+1;
+                NewChain.Grain(n1).Set(SCount).Chain(PCount)=f0;
+                NewChain.Grain(n1).Set(SCount).Chain=...
+                    NewChain.Grain(n1).Set(SCount).Chain(1:PCount);
+            end
+            HIT=1;
+            SCount=SCount+1;
+            PCount=1;
+            NewChain.Grain(n1).Set(SCount).Chain=zeros(size(sGB(n1).ToExt,1),1);
+            f0=sGB(n1).ToExt(n2,2);
+            NewChain.Grain(n1).Set(SCount).Chain(PCount)=sGB(n1).ToExt(n2,1);
+        end    
+        
+    end
+
+    
+    if HIT==0
+         NewChain.Grain(n1).Set(1).Chain=[];
+         disp(n1);
     else
-        Taken(f)=1;
+            PCount=PCount+1;
+    NewChain.Grain(n1).Set(SCount).Chain(PCount)=f0;
+    NewChain.Grain(n1).Set(SCount).Chain=...
+                    NewChain.Grain(n1).Set(SCount).Chain(1:PCount);
     end
 end
+disp('STOP_HERE');
+%%
+% for n1=1:size(sGB0,2)
+%    
+%         
+%      
+%     t=logical(sGB(n1).Taken);
+%     if sum(Taken(t))>0
+%         RedundantGrain(n1)=1;
+%     else
+%         Taken(t)=1;
+%     end
+% end
 
 %%
 figure(1);
@@ -73,27 +199,216 @@ for n1=1:size(sGB0,2)
     y=V(f,2);
     
     plot(x,y,'bs-');
-    if RedundantGrain(n1)~=1
+    
+    x(logical(sGB(n1).Cut))=nan;
+    y(logical(sGB(n1).Cut))=nan;
+%     x=V(f,1);
+%     y=V(f,2);
+    
+    
+    plot(x,y,'rx-');
+    
+end
+
+figure(2);
+clf;
+hold on;
+for n1=1:size(sGB0,2)
+    f=sGB(n1).Chain;
+    x=V(f,1);
+    y=V(f,2);
+    
+  
+    
+    x(logical(sGB(n1).Cut))=nan;
+    y(logical(sGB(n1).Cut))=nan;
+%     x=V(f,1);
+%     y=V(f,2);
+    
+    
+    plot(x,y,'r-');
+    
+end
+
+
+figure(3);
+% clf;
+hold on;
+for n1=1:size(sGB0,2)
+    EX=sGB(n1).ToExt;
+    for n2=1:length(EX)
+        f=EX(n2,:);
+    x=V(f,1);
+    y=V(f,2);
     plot(x,y,'rx-');
     end
+    
+    
+end
+
+
+figure(4);
+clf;
+hold on;
+for n1=1:size(sGB0,2)
+    EX=NewChain.Grain(n1);
+    for n2=1:length(EX.Set)
+        f=EX.Set(n2).Chain;
+    x=V(f,1);
+    y=V(f,2);
+    plot(x,y,'rx-');
+    end
+    
+    
 end
 
 %%
-NCut=2;
-
+disp('CONTINUE_HERE');
+VCaps=false(size(V,1),1);
 for n1=1:size(sGB0,2)
-    %%sRGB(n1).Chain=zeros(length(sGB(n1).Chain),1);
+%     sGB(n1).ToExt=zeros(length(sGB(n1).Cut),2);
     
-    if RedundantGrain == 1
-        sRGB(n1).Chain=sGB(n1).Chain;
-    else
-        sRGB(n1).Chain=sGB(n1).Chain(1:NCut:end);
+        EX=NewChain.Grain(n1);
+    for n2=1:length(EX.Set)
+        if ~isempty(NewChain.Grain(n1).Set(n2).Chain)
+        f=[NewChain.Grain(n1).Set(n2).Chain(1) NewChain.Grain(n1).Set(n2).Chain(end)];
+        VCaps(f)=true;
+        end
+    end
+end
+%% Deal With Cutting Later
+NCut=7;
+
+%%
+for n1=1:size(sGB0,2)
+%     sGB(n1).ToExt=zeros(length(sGB(n1).Cut),2);
+    
+%         EX=NewChain.Grain(n1);
+    for n2=1:length(NewChain.Grain(n1).Set)
+        %%
+        ShortChain.Grain(n1).Set(n2).Chain=NewChain.Grain(n1).Set(n2).Chain;
+        
+        if length(ShortChain.Grain(n1).Set(n2).Chain)>=2
+            CutCount=1;
+            ItemCount=1;
+
+            for n3=2:length(NewChain.Grain(n1).Set(n2).Chain)-1
+                f=NewChain.Grain(n1).Set(n2).Chain(n3);
+                if (VCaps(f))
+                    ItemCount=ItemCount+1;
+                    ShortChain.Grain(n1).Set(n2).Chain(ItemCount)=...
+                            NewChain.Grain(n1).Set(n2).Chain(n3);
+                else
+                    if CutCount==NCut
+                        ItemCount=ItemCount+1;
+                        ShortChain.Grain(n1).Set(n2).Chain(ItemCount)=...
+                            NewChain.Grain(n1).Set(n2).Chain(n3);
+                        CutCount=1;
+                    else
+                        CutCount=CutCount+1;
+                    end
+                end
+                
+            end
+            ItemCount=ItemCount+1;
+            ShortChain.Grain(n1).Set(n2).Chain(ItemCount)=...
+                    NewChain.Grain(n1).Set(n2).Chain(end);
+             ShortChain.Grain(n1).Set(n2).Chain=...
+                 ShortChain.Grain(n1).Set(n2).Chain(1:ItemCount);  
+        
+        end
+        
+    end
+end
+
+figure(5);
+clf;
+hold on;
+for n1=1:size(sGB0,2)
+    EX=ShortChain.Grain(n1);
+    for n2=1:length(EX.Set)
+        f=EX.Set(n2).Chain;
+    x=V(f,1);
+    y=V(f,2);
+    plot(x,y,'bs-');
     end
     
     
 end
 
+disp('STOP2');
 
+
+%% Now Convert to List
+%%
+for n1=1:size(sGB0,2)
+%     sGB(n1).ToExt=zeros(length(sGB(n1).Cut),2);
+    
+%         EX=NewChain.Grain(n1);
+    for n2=1:length(NewChain.Grain(n1).Set)
+        %%
+        if ~isempty(length(NewChain.Grain(n1).Set(n2).Chain))
+        LineList.Grain(n1).Set(n2).List=zeros(length(NewChain.Grain(n1).Set(n2).Chain)-1,2);
+        end
+        
+        for n3=1:(length(NewChain.Grain(n1).Set(n2).Chain)-1)
+            LineList.Grain(n1).Set(n2).List(n3,1)=...
+                NewChain.Grain(n1).Set(n2).Chain(n3);
+            LineList.Grain(n1).Set(n2).List(n3,2)=...
+                NewChain.Grain(n1).Set(n2).Chain(n3+1);
+        end
+        
+       
+        
+    end
+end
+
+disp('Complete');
+%%
+%{
+for n1=1:size(sGB0,2)
+    %%sRGB(n1).Chain=zeros(length(sGB(n1).Chain),1);
+    sGB(n1).ToExtShort=zeros(size(sGB(n1).ToExt));
+    LCount=0;
+    JCount=0;
+    
+    if ~isempty(sGB(n1).ToExt)
+        f1=sGB(n1).ToExt(1,1);
+        f2=sGB(n1).ToExt(1,2);
+        Last=False;
+        for n2=2:length(size(sGB(n1).ToExt,1))-1
+            if f2==sGB(n1).ToExt(n2,1)
+
+            end
+        end
+    end
+    
+%     if size(sGB(n1).ToExt,1)>1
+%     sGB(n1).ToExtShort=[sGB(n1).ToExt(1,:);...
+%                        sGB(n1).ToExt(2:NCut:end-1,:);...
+%                        sGB(n1).ToExt(end,:)];
+%     elseif size(sGB(n1).ToExt,1)==1
+%         sGB(n1).ToExtShort=sGB(n1).ToExt(1,:);
+%     else
+%         sGB(n1).ToExtShort=[];
+%     end
+end
+%}
+
+figure(4);
+% clf;
+hold on;
+for n1=1:size(sGB0,2)
+    EX=sGB(n1).ToExtShort;
+    for n2=1:length(EX)
+        f=EX(n2,:);
+    x=V(f,1);
+    y=V(f,2);
+    plot(x,y,'rx-');
+    end
+    
+    
+end
 %%
 figure(2);
 clf;
@@ -104,7 +419,7 @@ for n1=1:size(sGB0,2)
     x=V(f,1);
     y=V(f,2);
     
-    plot(x,y,'bs-');
+%     plot(x,y,'bs-');
     if RedundantGrain(n1)~=1
         f=sRGB(n1).Chain;
         x=V(f,1);
