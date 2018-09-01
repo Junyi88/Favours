@@ -46,11 +46,11 @@ for n1=1:length(PreambleText)
     fprintf(fileID,PreambleText{n1});
 end
 
-fprintf(fileID,SketchText,200); % [SheetSize]
-fprintf(fileID,PlaneText,0,0,5,5);  % [MinX,MinY,MaxX,MaxY]
+fprintf(fileID,SketchText,1000); % [SheetSize]
+fprintf(fileID,PlaneText,0,0,800,800);  % [MinX,MinY,MaxX,MaxY]
 fprintf(fileID,PartText);
 fprintf(fileID,SetPartText);
-fprintf(fileID,ExtrudeText,1); %[Depth]
+fprintf(fileID,ExtrudeText,50); %[Depth]
 fprintf(fileID,DelSketchText);
 fprintf(fileID,' \n');
 fclose(fileID);
@@ -58,14 +58,14 @@ fclose(fileID);
 %--------------------
 
 
-vP.DatumPointByCoordinate(coords=( 0, 1, 0 ))
-vP.DatumPointByCoordinate(coords=( 0, 2, 0 ))
-vP.DatumPointByCoordinate(coords=( 0, 1, 1 ))
-vP.DatumPlaneByThreePoints( point1=vP.datums[2], point2=vP.datums[3], point3=vP.datums[4])
-vP.DatumAxisByTwoPoint(point1=vP.datums[2], point2=vP.datums[3])
-mdb.models['Model-1'].ConstrainedSketch(gridSpacing=0.12, name='__profile__',sheetSize=5.02,
-    transform=vP.MakeSketchTransform(sketchPlane=vP.datums[5], sketchPlaneSide=SIDE1,
-    sketchUpEdge=vP.datums[6],sketchOrientation=RIGHT, origin=(0,0,0)))
-mdb.models['Model-1'].sketches['__profile__'].sketchOptions.setValues(sheetSize=6000)
-vP.projectReferencesOntoSketch(filter=COPLANAR_EDGES, sketch=mdb.models['Model-1'].sketches['__profile__'])
-mdb.models['Model-1'].sketches['__profile__'].rectangle(point1=(-6000, -6000), point2=(6000, 6000))
+% vP.DatumPointByCoordinate(coords=( 0, 1, 0 ))
+% vP.DatumPointByCoordinate(coords=( 0, 2, 0 ))
+% vP.DatumPointByCoordinate(coords=( 0, 1, 1 ))
+% vP.DatumPlaneByThreePoints( point1=vP.datums[2], point2=vP.datums[3], point3=vP.datums[4])
+% vP.DatumAxisByTwoPoint(point1=vP.datums[2], point2=vP.datums[3])
+% mdb.models['Model-1'].ConstrainedSketch(gridSpacing=0.12, name='__profile__',sheetSize=5.02,
+%     transform=vP.MakeSketchTransform(sketchPlane=vP.datums[5], sketchPlaneSide=SIDE1,
+%     sketchUpEdge=vP.datums[6],sketchOrientation=RIGHT, origin=(0,0,0)))
+% mdb.models['Model-1'].sketches['__profile__'].sketchOptions.setValues(sheetSize=6000)
+% vP.projectReferencesOntoSketch(filter=COPLANAR_EDGES, sketch=mdb.models['Model-1'].sketches['__profile__'])
+% mdb.models['Model-1'].sketches['__profile__'].rectangle(point1=(-6000, -6000), point2=(6000, 6000))
