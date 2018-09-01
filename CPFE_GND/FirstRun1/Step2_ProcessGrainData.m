@@ -362,7 +362,88 @@ for n1=1:size(sGB0,2)
         
     end
 end
-save Step2_Data.mat V F LineList ShortChain;
+
+
+
+for n1=1:size(sGB0,2)
+%     sGB(n1).ToExt=zeros(length(sGB(n1).Cut),2);
+    
+%         EX=NewChain.Grain(n1);
+    for n2=1:length(ShortChain.Grain(n1).Set)
+        %%
+        if ~isempty(length(ShortChain.Grain(n1).Set(n2).Chain))
+        ShortList.Grain(n1).Set(n2).List=zeros(length(ShortChain.Grain(n1).Set(n2).Chain)-1,2);
+        end
+        
+        for n3=1:(length(ShortChain.Grain(n1).Set(n2).Chain)-1)
+            ShortList.Grain(n1).Set(n2).List(n3,1)=...
+                ShortChain.Grain(n1).Set(n2).Chain(n3);
+            ShortList.Grain(n1).Set(n2).List(n3,2)=...
+                ShortChain.Grain(n1).Set(n2).Chain(n3+1);
+        end
+        
+       
+        
+    end
+end
+
+
+%%
+vTake=false(size(V,1),1);
+vMap=zeros(size(V,1),1);
+
+for n1=1:size(sGB0,2)
+%     sGB(n1).ToExt=zeros(length(sGB(n1).Cut),2);
+    
+%         EX=NewChain.Grain(n1);
+    for n2=1:length(ShortChain.Grain(n1).Set)
+        %%
+        
+        for n3=1:(length(ShortChain.Grain(n1).Set(n2).Chain)-1)
+            f1=ShortList.Grain(n1).Set(n2).List(n3,1);
+            f2=ShortList.Grain(n1).Set(n2).List(n3,2);
+            
+            vTake([f1 f2],1)=true;
+        end
+                
+    end
+end
+
+Count=0;
+%%
+for n1=1:length(vMap)
+   
+    if vTake
+       Count=Count+1;
+       vMap(n1)=Count;
+    end
+    
+end
+
+for n1=1:size(sGB0,2)
+%     sGB(n1).ToExt=zeros(length(sGB(n1).Cut),2);
+    
+%         EX=NewChain.Grain(n1);
+    for n2=1:length(ShortChain.Grain(n1).Set)
+        %%
+        if ~isempty(length(ShortChain.Grain(n1).Set(n2).Chain))
+        ShortList2.Grain(n1).Set(n2).List=zeros(length(ShortChain.Grain(n1).Set(n2).Chain)-1,2);
+        end
+        
+        for n3=1:(length(ShortChain.Grain(n1).Set(n2).Chain)-1)
+            ShortList2.Grain(n1).Set(n2).List(n3,1)=...
+                vMap(ShortChain.Grain(n1).Set(n2).Chain(n3));
+            ShortList2.Grain(n1).Set(n2).List(n3,2)=...
+                vMap(ShortChain.Grain(n1).Set(n2).Chain(n3+1));
+        end
+        
+       
+        
+    end
+end
+
+VShort=V(vTake,:);
+save Step2_Data.mat V F LineList ShortList ShortChain vMap VShort;
 disp('Complete');
 %%
 %{
