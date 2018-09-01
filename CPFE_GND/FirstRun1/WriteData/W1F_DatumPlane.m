@@ -1,4 +1,4 @@
-function []=W1F_DatumPlane(fileID,V,LineList,ZVals)
+function []=W1F_DatumPlane(fileID,V,LineList)
 
 
 

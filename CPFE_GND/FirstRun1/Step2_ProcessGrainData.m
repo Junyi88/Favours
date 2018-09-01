@@ -413,7 +413,7 @@ Count=0;
 %%
 for n1=1:length(vMap)
    
-    if vTake
+    if vTake(n1)
        Count=Count+1;
        vMap(n1)=Count;
     end
@@ -443,7 +443,7 @@ for n1=1:size(sGB0,2)
 end
 
 VShort=V(vTake,:);
-save Step2_Data.mat V F LineList ShortList ShortChain vMap VShort;
+save Step2_Data.mat V F LineList ShortList ShortList2 ShortChain vMap VShort;
 disp('Complete');
 %%
 %{
