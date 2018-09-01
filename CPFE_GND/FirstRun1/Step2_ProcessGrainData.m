@@ -88,15 +88,15 @@ for n1=1:size(sGB0,2)
 end
 
 %%
-VXmin=0;%min(V(:,1));
-VXmax=760;max(V(:,1));
-VYmin=0;%min(V(:,2));
-VYmax=567;max(V(:,2));
+VXmin=0-0.1;%min(V(:,1));
+VXmax=760+0.1;max(V(:,1));
+VYmin=0-0.1;%min(V(:,2));
+VYmax=567+0.1;max(V(:,2));
 
-VXmin=min(V(:,1));
-VXmax=max(V(:,1));
-VYmin=min(V(:,2));
-VYmax=max(V(:,2));
+% VXmin=min(V(:,1));
+% VXmax=max(V(:,1));
+% VYmin=min(V(:,2));
+% VYmax=max(V(:,2));
 
 for n1=1:size(sGB0,2)
     f=sGB(n1).Chain;
@@ -362,7 +362,7 @@ for n1=1:size(sGB0,2)
         
     end
 end
-
+save Step2_Data.mat V F LineList ShortChain;
 disp('Complete');
 %%
 %{
