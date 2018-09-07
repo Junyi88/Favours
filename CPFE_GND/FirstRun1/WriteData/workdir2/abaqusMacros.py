@@ -530,3 +530,80 @@ def Macro8():
     mdb.jobs['Job-1'].writeInput(consistencyChecking=OFF)
 
 
+def CancelStuff():
+    import section
+    import regionToolset
+    import displayGroupMdbToolset as dgm
+    import part
+    import material
+    import assembly
+    import step
+    import interaction
+    import load
+    import mesh
+    import optimization
+    import job
+    import sketch
+    import visualization
+    import xyPlot
+    import displayGroupOdbToolset as dgo
+    import connectorBehavior
+    mdb.models['Model-1'].setValues(noPartsInputFile=ON)
+    import job
+    mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+    mdb.models['Model-1'].keywordBlock.setValues(edited = 0)
+    a = mdb.models['Model-1'].rootAssembly
+    session.viewports['Viewport: 1'].setValues(displayedObject=a)
+    session.viewports['Viewport: 1'].assemblyDisplay.setValues(
+        adaptiveMeshConstraints=ON)
+    mdb.models['Model-1'].StaticStep(name='Step-1', previous='Initial')
+    session.viewports['Viewport: 1'].assemblyDisplay.setValues(step='Step-1')
+    mdb.models['Model-1'].keywordBlock.synchVersions(storeNodesAndElements=False)
+    mdb.models['Model-1'].keywordBlock.replace(295, """
+    ** ----------------------------------------------------------------
+    **
+    ** STEP: Step-1
+    **
+    * include=""")
+
+
+def FInalise():
+    import section
+    import regionToolset
+    import displayGroupMdbToolset as dgm
+    import part
+    import material
+    import assembly
+    import step
+    import interaction
+    import load
+    import mesh
+    import optimization
+    import job
+    import sketch
+    import visualization
+    import xyPlot
+    import displayGroupOdbToolset as dgo
+    import connectorBehavior
+    session.viewports['Viewport: 1'].view.setValues(nearPlane=1582.82, 
+        farPlane=2587.9, width=1655.37, height=756.036, cameraPosition=(
+        -1259.8, 963.514, 1114.81), cameraTarget=(208.656, 443.611, 185.757))
+    mdb.models['Model-1'].setValues(noPartsInputFile=ON)
+    a = mdb.models['Model-1'].rootAssembly
+    session.viewports['Viewport: 1'].setValues(displayedObject=a)
+    session.viewports['Viewport: 1'].assemblyDisplay.setValues(
+        adaptiveMeshConstraints=ON)
+    mdb.models['Model-1'].StaticStep(name='Step-1', previous='Initial')
+    session.viewports['Viewport: 1'].assemblyDisplay.setValues(step='Step-1')
+    session.viewports['Viewport: 1'].assemblyDisplay.setValues(
+        adaptiveMeshConstraints=OFF)
+    mdb.Job(name='Job-1', model='Model-1', description='', type=ANALYSIS, 
+        atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=90, 
+        memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, 
+        explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=OFF, 
+        modelPrint=OFF, contactPrint=OFF, historyPrint=OFF, userSubroutine='', 
+        scratch='', resultsFormat=ODB, multiprocessingMode=DEFAULT, numCpus=1, 
+        numGPUs=0)
+    mdb.jobs['Job-1'].writeInput(consistencyChecking=OFF)
+
+

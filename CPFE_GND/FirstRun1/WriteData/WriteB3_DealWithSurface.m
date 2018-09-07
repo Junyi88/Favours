@@ -6,6 +6,18 @@ OutputFileName='WTest0.py';
 %%
 load ../Step2_Data.mat;
 
+NGrains=length(ShortList2.Grain);
+GrainMid=zeros(NGrains,2);
+
+for n1=1:NGrains
+   tt=sGB(n1).Chain;
+   xx=V(tt,1);
+   yy=V(tt,2);
+   GrainMid(n1,:)=[mean(xx) mean(yy)];
+    
+end
+
+
 T0_Preamble=['\n \n# Create Surfaces --------- \n'];
 T0_BaseText={['p = mdb.models[' char(39) 'Model-1' ...
     char(39) '].parts[' char(39) 'Part-Base' char(39) '] \n'];...
@@ -30,7 +42,7 @@ for n1=1:NGrains
     fprintf(fileID,T1_FindFace,GrainMid(n1,1),GrainMid(n1,2));
     fprintf(fileID,T2_MakeFaces,n1);
 end
-fprintf(fileID,T1_FindFace);
+% fprintf(fileID,T1_FindFace);
 
 fprintf(fileID,' \n');
 fclose(fileID);

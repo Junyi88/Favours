@@ -2,8 +2,8 @@ clear;
 load ../Step2_Data.mat;
 
 SheetSize=200.0;
-CreateRec=[10,10,740,480];
-
+% CreateRec=[10,10,740,480];
+CreateRec=[10,20,740,558];
 %%
 T0_Blank=['\n \n# Generate Sketch \n'];
 T1_Sheet=['s = mdb.models[' char(39) 'Model-1' char(39) ...
@@ -53,3 +53,5 @@ end
 
 %--------
 fclose(fileID);
+
+save Write1_Dat;

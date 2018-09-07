@@ -443,68 +443,43 @@ for n1=1:size(sGB0,2)
 end
 
 VShort=V(vTake,:);
-save Step2_Data.mat V F LineList ShortList ShortList2 ShortChain vMap VShort;
+save Step2_Data.mat V F LineList ShortList ShortList2 ShortChain vMap VShort sGB sGB0;
 disp('Complete');
 %%
-%{
-for n1=1:size(sGB0,2)
-    %%sRGB(n1).Chain=zeros(length(sGB(n1).Chain),1);
-    sGB(n1).ToExtShort=zeros(size(sGB(n1).ToExt));
-    LCount=0;
-    JCount=0;
-    
-    if ~isempty(sGB(n1).ToExt)
-        f1=sGB(n1).ToExt(1,1);
-        f2=sGB(n1).ToExt(1,2);
-        Last=False;
-        for n2=2:length(size(sGB(n1).ToExt,1))-1
-            if f2==sGB(n1).ToExt(n2,1)
+NGrains=length(ShortList2.Grain);
+GrainMid=zeros(NGrains,2);
 
-            end
-        end
-    end
-    
-%     if size(sGB(n1).ToExt,1)>1
-%     sGB(n1).ToExtShort=[sGB(n1).ToExt(1,:);...
-%                        sGB(n1).ToExt(2:NCut:end-1,:);...
-%                        sGB(n1).ToExt(end,:)];
-%     elseif size(sGB(n1).ToExt,1)==1
-%         sGB(n1).ToExtShort=sGB(n1).ToExt(1,:);
-%     else
-%         sGB(n1).ToExtShort=[];
-%     end
-end
-%}
-
-figure(4);
-% clf;
-hold on;
-for n1=1:size(sGB0,2)
-    EX=sGB(n1).ToExtShort;
-    for n2=1:length(EX)
-        f=EX(n2,:);
-    x=V(f,1);
-    y=V(f,2);
-    plot(x,y,'rx-');
-    end
-    
+for n1=1:NGrains
+   tt=sGB(n1).Chain;
+   xx=V(tt,1);
+   yy=V(tt,2);
+   GrainMid(n1,:)=[mean(xx) mean(yy)];
     
 end
-%%
-figure(2);
+
+figure(6);
 clf;
 hold on;
-
 for n1=1:size(sGB0,2)
-    f=sGB(n1).Chain;
+    EX=ShortChain.Grain(n1);
+    for n2=1:length(EX.Set)
+        f=EX.Set(n2).Chain;
     x=V(f,1);
     y=V(f,2);
-    
-%     plot(x,y,'bs-');
-    if RedundantGrain(n1)~=1
-        f=sRGB(n1).Chain;
-        x=V(f,1);
-        y=V(f,2);
-        plot(x,y,'rx-');
+    plot(x,y,'b-');
     end
+    
+    text(GrainMid(n1,1).*1.04,GrainMid(n1,2).*1.04,num2str(n1));
 end
+
+plot(GrainMid(:,1),GrainMid(:,2),'rx');
+plot(GrainMid(24,1),GrainMid(24,2),'rs');
+plot([10 10],[10 480],'k-');
+plot([10 740],[480 480],'k-');
+plot([740 740],[480 10],'k-');
+plot([10 740],[10 10],'k-');
+
+figure(7);
+% clf;
+% plot(ebsd);
+

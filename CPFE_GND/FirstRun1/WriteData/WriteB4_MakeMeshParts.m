@@ -2,18 +2,35 @@ clear;
 
 OutputFileName='WTest0.py';
 % fileID = fopen(OutputFileName,'a+');
-
+load Write1_Dat CreateRec;
 %%
 ZThickness=10.0;
 NLayer=5;
 
 MyBounds=[0.0 0.0 10.0 10.0];
-
+% CreateRec=[10,10,740,570];
+xMin=CreateRec(1);
+xMax=CreateRec(3);
+yMin=CreateRec(2);
+yMax=CreateRec(4);
 
 %%
 load ../Step2_Data.mat;
+NGrains=length(ShortList2.Grain);
+GrainMid=zeros(NGrains,2);
 
+for n1=1:NGrains
+   tt=sGB(n1).Chain;
+   xx=V(tt,1);
+   yy=V(tt,2);
+   GrainMid(n1,:)=[mean(xx) mean(yy)];
+    
+end
 
+% Correction
+GrainMid(15,1)=735;
+GrainMid(23,2)=250;
+GrainMid(26,2)=230;
 %%
 T0_Preamble=['\n \n# Make Parts ------------------ \n'];
 
@@ -23,7 +40,7 @@ T0_Preamble=['\n \n# Make Parts ------------------ \n'];
     p = mdb.models['Model-1'].Part(name='Part-2-Copy', 
         objectToCopy=mdb.models['Model-1'].parts['Part-2'])
 %}
-T1_Text=['\n \n# Generating Grain %d ----------------------'];
+T1_Text=['\n \n# Generating Grain %d ---------------------- \n'];
 T1_CopyPart=['p = mdb.models[' char(39) 'Model-1' char(39) ...
     '].Part(name=' char(39) 'Part-Temp' char(39) ...
     ', objectToCopy=mdb.models[' char(39) ...
@@ -38,7 +55,7 @@ T2_SetupBot={['p = mdb.models[' char(39) 'Model-1' char(39) ...
 
 T2_GetFaces=['faces = f.findAt(((%8.4e, %8.4e, 0.0), ),) \n']; %xC yC
 T2_GetSource=['pickedGeomSourceSide=regionToolset.Region(faces=faces) \n'];
-T2_SetVector=['vector =((0.0, 0.0, 0.0), (0.0, 0.0, %8.4e))']; % Zcal
+T2_SetVector=['vector =((0.0, 0.0, 0.0), (0.0, 0.0, %8.4e)) \n']; % Zcal
 
 T2_GenerateMesh=['p.generateBottomUpExtrudedMesh(' ...
     'geometrySourceSide=pickedGeomSourceSide, ' ...
@@ -106,7 +123,7 @@ T4_Setup=['p = mdb.models[' char(39) 'Model-1' char(39) ...
 % T4_PickElements=[elems1 = z1[0:84]]
 T4_BuildStuff={['elems1 = p.elements \n'];... % Might have to remove this
     ['pickedRegions =(elems1, ) \n']; ...
-    ['p.setElementType(regions=pickedRegions, elemTypes=(elemType1)) \n']; ...
+    ['p.setElementType(regions=pickedRegions, elemTypes=(elemType1,)) \n']; ...
     };
 
 % ELEMENT TYPE
@@ -144,7 +161,7 @@ T5_Element=['e = p.elements \n'];
 T5_PickElement=['elements = e.getByBoundingBox(xMin=%8.4e , yMin=%8.4e , '... 
     'xMax=%8.4e , yMax=%8.4e ) \n']; % Xmin yMin xmax ymax
 T5_Set=['region = p.Set(elements=elements, name=' char(39) ...
-    'Set-El' char(39) ') \n'];
+    'Set-El-%d' char(39) ') \n']; % Grain Number
 T5_Assign=['p.SectionAssignment(region=region, ' ...
     'sectionName=' char(39) 'Section-%d' char(39) ', offset=0.0, ' ...
         'offsetType=MIDDLE_SURFACE, offsetField=' char(39) char(39) ', ' ...
@@ -176,7 +193,14 @@ fileID = fopen(OutputFileName,'a+');
 
 fprintf(fileID,T0_Preamble);
 
+HasGrain=false(NGrains,1);
+
 for n1=1:NGrains
+%     if true
+   hasGrain=(GrainMid(n1,1)>=xMin)&&(GrainMid(n1,1)<=xMax)...
+       &&(GrainMid(n1,2)>=yMin)&&(GrainMid(n1,2)<=yMax);
+   if hasGrain
+       HasGrain(n1)=true;
 %% T1
 fprintf(fileID,T1_Text,n1);  
 fprintf(fileID,T1_CopyPart);    
@@ -190,7 +214,7 @@ fprintf(fileID,T2_GetFaces,GrainMid(n1,1),GrainMid(n1,2));
 fprintf(fileID,T2_GetSource);  
 fprintf(fileID,T2_SetVector,ZThickness); %ZThickness
 fprintf(fileID,T2_GenerateMesh,NLayer); %NLayer
-fprintf(T2_DeleteMesh);
+fprintf(fileID,T2_DeleteMesh);
 
 %% T3
 fprintf(fileID,T3_SetVal); 
@@ -209,12 +233,37 @@ fprintf(fileID,T5_CreateSection,n1,n1);
 fprintf(fileID,T5_PickPart,n1); 
 fprintf(fileID,T5_Element); 
 
-fprintf(fileID,T5_PickElement,xMin, yMin, xMax, yMax); 
+fprintf(fileID,T5_PickElement,xMin-10, yMin-10, xMax+10, yMax+10); 
 
-fprintf(fileID,T5_Set); 
+fprintf(fileID,T5_Set,n1); 
 fprintf(fileID,T5_Assign,n1); 
-
+    end
 end
 
 fprintf(fileID,' \n');
 fclose(fileID);
+
+%%
+figure(6);
+clf;
+hold on;
+for n1=1:size(sGB0,2)
+    EX=ShortChain.Grain(n1);
+    for n2=1:length(EX.Set)
+        f=EX.Set(n2).Chain;
+    x=V(f,1);
+    y=V(f,2);
+    plot(x,y,'b-');
+    end
+    
+    text(GrainMid(n1,1).*1.04,GrainMid(n1,2).*1.04,num2str(n1));
+end
+
+plot(GrainMid(:,1),GrainMid(:,2),'rx');
+plot(GrainMid(53,1),GrainMid(53,2),'gs');
+plot([xMin xMin],[yMin yMax],'k-');
+plot([xMin xMax],[yMax yMax],'k-');
+plot([xMax xMax],[yMax yMin],'k-');
+plot([xMin xMax],[yMin yMin],'k-');
+
+save WriteB4_Data HasGrain NGrains;
