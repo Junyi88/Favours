@@ -101,3 +101,15 @@ for n1=1:LEl
    GNDI(n1,:)=(NEI*(GND(n1,:).')).'; 
 
 end
+
+OutputFileName='GND.txt';
+fileID = fopen(OutputFileName,'w+');
+
+FMT='%12.8e %12.8e %12.8e %12.8e %12.8e %12.8e %12.8e %12.8e \n';
+
+
+for n1=1:LEl
+fprintf(fileID,FMT,GNDI(n1,:));    
+end
+
+fclose(fileID);

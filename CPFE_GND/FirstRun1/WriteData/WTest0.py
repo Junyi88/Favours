@@ -2945,4 +2945,20 @@ a.InstanceFromBooleanMerge(name='Poly-Grain', instances=(
 	a.instances['Grain-53-1'],
 	),mergeNodes=ALL, nodeMergingTolerance=1e-06, domain=MESH,
 	originalInstances=SUPPRESS)
+
+ 
+# Write Output ---------------------- 
+mdb.models['Model-1'].setValues(noPartsInputFile=ON)
+a = mdb.models['Model-1'].rootAssembly 
+mdb.models['Model-1'].StaticStep(name='Step-1', previous='Initial')
+mdb.Job(name='ExtractForPoints-1', model='Model-1', description='', type=ANALYSIS,
+	atTime=None, waitMinutes=0, waitHours=0, queue=None, memory=90, 
+	memoryUnits=PERCENTAGE, getMemoryFromAnalysis=True, 
+	explicitPrecision=SINGLE, nodalOutputPrecision=SINGLE, echoPrint=OFF, 
+	modelPrint=OFF, contactPrint=OFF, historyPrint=OFF, userSubroutine='',
+	scratch='', resultsFormat=ODB, multiprocessingMode=DEFAULT, numCpus=1,
+	numGPUs=0) 
+
+mdb.jobs['ExtractForPoints-1'].writeInput(consistencyChecking=OFF) 
+
  
