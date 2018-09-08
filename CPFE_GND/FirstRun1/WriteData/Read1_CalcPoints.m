@@ -1,0 +1,103 @@
+clear;
+
+load Read0_Data ElSystems NodeCoords;
+
+LEl=size(ElSystems,1);
+
+xNodes=zeros(LEl,8);
+yNodes=zeros(LEl,8);
+zNodes=zeros(LEl,8);
+
+for n1=1:LEl
+    for n2=1:8
+        N=ElSystems(n1,n2+1);
+        xNodes(n1,n2)=NodeCoords(N,2);
+        yNodes(n1,n2)=NodeCoords(N,3);
+        zNodes(n1,n2)=NodeCoords(N,4);
+    end
+   
+end
+
+%%
+figure(1);
+clf;
+hold on;
+plot3(xNodes(1,:),yNodes(1,:),zNodes(1,:),'rx');
+for n1=1:8
+text(xNodes(1,n1).*1.001,yNodes(1,n1).*1.001,zNodes(1,n1).*1.001,num2str(n1));
+end
+xlabel('x');
+ylabel('y');
+zlabel('z');
+axis equal;
+
+%% 
+xNodeI=xNodes(:,[1 2 4 3 5 6 8 7]);
+yNodeI=yNodes(:,[1 2 4 3 5 6 8 7]);
+zNodeI=zNodes(:,[1 2 4 3 5 6 8 7]);
+
+%%
+
+PNat=[-1 1 1;...
+    -1 -1 1;...
+    -1 1 -1;...
+    -1 -1 -1;...
+    1 1 1;...
+    1 -1 1;...
+    1 1 -1;...
+    1 -1 -1];
+PI=PNat./sqrt(3);
+
+%%
+NEnat=zeros(8,8);
+NEI=zeros(8,8);
+
+for n1=1:8
+   for n2=1:8
+       NEnat(n1,n2)=(1+PNat(n1,1)*PNat(n2,1))*...
+           (1+PNat(n1,2)*PNat(n2,2))*...
+           (1+PNat(n1,3)*PNat(n2,3));
+       NEI(n1,n2)=(1+PI(n1,1)*PI(n2,1))*...
+           (1+PI(n1,2)*PI(n2,2))*...
+           (1+PI(n1,3)*PI(n2,3));
+   end
+end
+
+NEnat=NEnat./8;
+NEI=NEI./8;
+
+%%
+xI=zeros(LEl,8);
+yI=zeros(LEl,8);
+zI=zeros(LEl,8);
+
+for n1=1:LEl
+   xI(n1,:)=(NEI*(xNodeI(n1,:).')).'; 
+   yI(n1,:)=(NEI*(yNodeI(n1,:).')).'; 
+   zI(n1,:)=(NEI*(zNodeI(n1,:).')).'; 
+end
+
+figure(1);
+plot3(xI(1,:),yI(1,:),zI(1,:),'bs');
+for n1=1:8
+text(xI(1,n1).*1.001,yI(1,n1).*1.001,zI(1,n1).*1.001,num2str(n1));
+end
+
+%%
+load ../Step1_Data;
+
+SF=fit([X(:),Y(:)],GND_total(:),'linearinterp');
+
+GND=zeros(LEl,8);
+
+for n1=1:LEl
+    for n2=1:8
+      GND(n1,n2)=feval(SF,[xNodeI(n1,n2),yNodeI(n1,n2)]);
+    end
+end
+
+GNDI=zeros(LEl,8);
+for n1=1:LEl
+   GNDI(n1,:)=(NEI*(GND(n1,:).')).'; 
+
+end
