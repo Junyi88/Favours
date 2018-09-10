@@ -85,14 +85,14 @@ end
 
 %%
 load ../Step1_Data;
-
-SF=fit([X(:),Y(:)],GND_total(:),'linearinterp');
+load ../4_GNDinMTEX XX YY;
+SF=fit([XX(:),YY(:)],GND_total(:),'linearinterp');
 
 GND=zeros(LEl,8);
 
 for n1=1:LEl
     for n2=1:8
-      GND(n1,n2)=feval(SF,[xNodeI(n1,n2),yNodeI(n1,n2)]);
+      GND(n1,n2)=feval(SF,[xI(n1,n2),yI(n1,n2)]);
     end
 end
 

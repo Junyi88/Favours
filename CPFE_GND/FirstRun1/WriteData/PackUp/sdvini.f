@@ -5,16 +5,10 @@ C
 C
       INTEGER I
       REAL*8 GND
-	  DIMENSION STATEV(NSTATV),COORDS(NCRDS),GND(8)
-      
-	  open (200, file = 'GND.txt', status = 'old')
-      do I=1,NOEL
-	    read(200,*) GND
-	  end do
-      close(200)
-	  
-	  
-	  STATEV(26)=GND(NPT)
+	  DIMENSION STATEV(NSTATV),COORDS(NCRDS)
+      COMMON /GNDS/GND(8,98730)
+	   
+	  STATEV(26)=GND(NPT,NOEL)
 
       RETURN
       END
