@@ -1,8 +1,9 @@
 clear;
 
 %% User Input Parameter
-GrainSmoothFactor = 2; % This is a factor used to smooth the grains
-
+GrainSmoothFactor = 0; % This is a factor used to smooth the grains
+XDist=760;
+YDist=567;
 
 %% Load Previous Step Data
 load Step1_Data.mat;
@@ -88,10 +89,12 @@ for n1=1:size(sGB0,2)
 end
 
 %%
+V(:,1)=V(:,1)-min(V(:,1));
+V(:,2)=V(:,2)-min(V(:,2));
 VXmin=0-0.1;%min(V(:,1));
-VXmax=760+0.1;max(V(:,1));
+VXmax=XDist+0.1;%max(V(:,1));
 VYmin=0-0.1;%min(V(:,2));
-VYmax=567+0.1;max(V(:,2));
+VYmax=YDist+0.1;%max(V(:,2));
 
 % VXmin=min(V(:,1));
 % VXmax=max(V(:,1));
@@ -457,7 +460,7 @@ for n1=1:NGrains
     
 end
 
-figure(6);
+figure(62);
 clf;
 hold on;
 for n1=1:size(sGB0,2)
@@ -474,12 +477,12 @@ end
 
 plot(GrainMid(:,1),GrainMid(:,2),'rx');
 plot(GrainMid(24,1),GrainMid(24,2),'rs');
-plot([10 10],[10 480],'k-');
-plot([10 740],[480 480],'k-');
-plot([740 740],[480 10],'k-');
-plot([10 740],[10 10],'k-');
+plot([10 10],[10 YDist],'k-');
+plot([10 XDist],[YDist YDist],'k-');
+plot([XDist XDist],[YDist 10],'k-');
+plot([10 XDist],[10 10],'k-');
 
 figure(7);
-% clf;
-% plot(ebsd);
+clf;
+plot(grains);
 

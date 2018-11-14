@@ -28,9 +28,9 @@ for n1=1:NGrains
 end
 
 % Correction
-GrainMid(15,1)=735;
-GrainMid(23,2)=250;
-GrainMid(26,2)=230;
+% GrainMid(15,1)=735;
+% GrainMid(23,2)=250;
+% GrainMid(26,2)=230;
 %%
 T0_Preamble=['\n \n# Make Parts ------------------ \n'];
 
@@ -201,6 +201,9 @@ for n1=1:NGrains
        &&(GrainMid(n1,2)>=yMin)&&(GrainMid(n1,2)<=yMax);
    if hasGrain
        HasGrain(n1)=true;
+%    end
+%    
+%    if HasGrain(n1)
 %% T1
 fprintf(fileID,T1_Text,n1);  
 fprintf(fileID,T1_CopyPart);    
