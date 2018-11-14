@@ -98,11 +98,13 @@ C     WRITE PROPS INTO SVARS TO INITIALIZE (ONCE ONLY),
       if (kinc == 1 .and. kstep==1) then
                 
 
-  
-        do i=1,NSTATV
+c JUNYI REMOVE STUFF  
+        do i=1,25
          STATEV(i) = 0. 
         end do 
-      
+        do i=27,NSTATV
+         STATEV(i) = 0. 
+        end do       
    
          do i=1,3
          do j=1,3
@@ -117,7 +119,7 @@ C     WRITE PROPS INTO SVARS TO INITIALIZE (ONCE ONLY),
       STATEV(89) = 1.0
 
       STATEV(54) = 0.01 ! initial sessile SSD density
-  
+      STATEV(56) = STATEV(54) + STATEV(26)
       svars = 0
       
   

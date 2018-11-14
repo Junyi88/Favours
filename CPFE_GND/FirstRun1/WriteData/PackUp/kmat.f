@@ -604,7 +604,7 @@ C
       END DO        
       !23-25 are rotations stored in UEL    
 C     usvars((kint-1)*knsdv+34) = xtau     
-      usvars(26) = rhoGND !all
+      usvars(26) = usvars(26) + rhoGND !all
   !    usvars(27) = gndab  !a basal
   !    usvars(28) = gndapr !a prismatic  
   !    usvars(29) = gndapy !a pyramidal
@@ -628,7 +628,7 @@ C     usvars((kint-1)*knsdv+34) = xtau
       usvars(54) = rhossd
       usvars(55) = vms
       rho=rhoGND+rhossd
-      usvars(56) = rho     
+      usvars(56) = usvars(26) +rho     
       !GNDs on indiviual systems
       !max(nSys) is currently limited to 24. IF all 48 of bcc is needed, storage should be raised to match that!
       DO i=1,nSys
