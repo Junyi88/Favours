@@ -6,7 +6,7 @@ C
       INTEGER I
 	  DIMENSION STATEV(NSTATV),COORDS(NCRDS)
       
-      include 'GNDALT.f'
+      include 'GNDSPLIT.f'
 	  
 	  
 	  STATEV(26)=GND(NPT,NOEL)

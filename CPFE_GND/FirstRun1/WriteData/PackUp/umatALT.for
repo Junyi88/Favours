@@ -99,10 +99,12 @@ C     WRITE PROPS INTO SVARS TO INITIALIZE (ONCE ONLY),
                 
 
   
-        do i=1,NSTATV
+        do i=1,25
          STATEV(i) = 0. 
         end do 
-      
+         do i=27,NSTATV
+         STATEV(i) = 0. 
+        end do      
    
          do i=1,3
          do j=1,3

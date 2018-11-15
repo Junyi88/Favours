@@ -9,6 +9,16 @@ load ../Step2_Data.mat;
 NGrains=length(ShortList2.Grain);
 GrainMid=zeros(NGrains,2);
 
+%%
+% for n1=1:NGrains
+%    tt=sGB(n1).Chain;
+%    xx=V(tt,1);
+%    yy=V(tt,2);
+%    GrainMid(n1,:)=[mean(xx) mean(yy)];
+%     
+% end
+%% Change the mid stuff
+
 for n1=1:NGrains
    tt=sGB(n1).Chain;
    xx=V(tt,1);

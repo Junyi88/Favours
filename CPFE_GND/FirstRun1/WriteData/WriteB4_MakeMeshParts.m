@@ -19,12 +19,50 @@ load ../Step2_Data.mat;
 NGrains=length(ShortList2.Grain);
 GrainMid=zeros(NGrains,2);
 
+GrainWithin=false(NGrains,1);
+
 for n1=1:NGrains
    tt=sGB(n1).Chain;
    xx=V(tt,1);
    yy=V(tt,2);
-   GrainMid(n1,:)=[mean(xx) mean(yy)];
-    
+   hg=0;
+   
+   for n2=1:length(xx)
+      HG=(xx(n2)>=xMin)&&(xx(n2)<=xMax)...
+       &&(yy(n2)>=yMin)&&(yy(n2)<=yMax);
+      if HG
+          hg=hg+1;
+      else
+          
+          if (xx(n2)<xMin)
+             xx(n2)=xMin; 
+          end
+          if (xx(n2)>xMax)
+             xx(n2)=xMax; 
+          end
+          if (yy(n2)<yMin)
+             yy(n2)=yMin; 
+          end
+          if (yy(n2)>yMax)
+             yy(n2)=yMax; 
+          end
+      end
+       
+   end
+   
+   if hg==0
+       GrainWithin(n1)=false;
+   elseif hg==length(xx)
+       GrainWithin(n1)=true;
+       GrainMid(n1,:)=[mean(xx) mean(yy)];
+   else
+       
+       GrainWithin(n1)=true;
+       GrainMid(n1,:)=[mean(xx) mean(yy)];       
+       
+   end
+   
+   
 end
 
 % Correction
