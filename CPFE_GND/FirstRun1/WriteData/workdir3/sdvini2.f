@@ -1,0 +1,15 @@
+      SUBROUTINE SDVINI(STATEV,COORDS,NSTATV,NCRDS,NOEL,NPT,
+     1 LAYER,KSPT)
+C
+      INCLUDE 'ABA_PARAM.INC'
+C
+      INTEGER I
+	  DIMENSION STATEV(NSTATV),COORDS(NCRDS)
+      
+c      include 'GNDSPLIT.f'
+       include 'mycommon.f'  	  
+	  
+       STATEV(26)=GND(NPT,NOEL)
+       STATEV(89)=110.0
+      RETURN
+      END

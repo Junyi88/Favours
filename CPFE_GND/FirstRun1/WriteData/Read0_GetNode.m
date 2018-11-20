@@ -1,6 +1,6 @@
 clear;
 
-filename='ExtractForPoints-1.inp';
+filename='ExtractForPoints-1-Init.inp';
 fileID = fopen(filename,'r');
 [FullText,posX ]= textscan(fileID,'%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s','EndOfLine','\n');
 
@@ -59,6 +59,10 @@ for n1=NodeStart:NodeEnd
     z=str2double(s1{1});
     NodeCoords(N,:)=[N,x,y,z];
 end
+
+% NodeCoords(:,2)=NodeCoords(:,2)-min(NodeCoords(:,2));
+% NodeCoords(:,3)=NodeCoords(:,3)-min(NodeCoords(:,3));
+% NodeCoords(:,4)=NodeCoords(:,4)-min(NodeCoords(:,4));
 
 %%
 ElSystems=zeros(LEl,8);

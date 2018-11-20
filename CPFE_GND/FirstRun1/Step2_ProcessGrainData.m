@@ -2,9 +2,12 @@ clear;
 
 %% User Input Parameter
 GrainSmoothFactor = 0; % This is a factor used to smooth the grains
-XDist=760;
-YDist=567;
+% XDist=760;
+% YDist=567;
 
+
+XDist=750;
+YDist=570;
 %% Load Previous Step Data
 load Step1_Data.mat;
 

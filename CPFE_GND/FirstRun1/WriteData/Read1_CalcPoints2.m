@@ -88,8 +88,12 @@ end
 
 %%
 load ../Step1_Data;
-% load ../4_GNDinMTEX2;
-load ./RX_CutGOS2_Corner1;
+% load ../4_GNDinMTEX2 X Y;
+% load ./EBSD10min_GND;
+
+load ../4_GNDinMTEXinit X Y;
+load ./EBSDinitial_GND;
+
 XX=X.*(max(grains.x)-min(grains.x))./max(X(:));
 YY=Y.*(max(grains.y)-min(grains.y))./max(Y(:));
 
@@ -99,9 +103,12 @@ YYY=YY(:);
 % XXX=XXX(XXX~=0);
 % YYY=YYY(YYY~=0);
 
-GGG=GND_total(:);
+% GGG=GND_total(:);
+gndDensity_Gridified=gndDensity_Gridified(2:end,2:end);
+GGG=gndDensity_Gridified(:);
 % GGG=GGG(PP~=0);
-SF=fit([XXX,YYY],GGG,'linearinterp');
+NotNan=~isnan(GGG);
+SF=fit([XXX(NotNan),YYY(NotNan)],GGG(NotNan),'linearinterp');
 
 GND=zeros(LEl,8);
 
@@ -114,6 +121,11 @@ for n1=1:LEl
       end
     end
 end
+
+figure(290);
+clf;
+% plot3(xI,yI,GND,'bo');
+surf(xI,yI,GND,'EdgeColor','none');
 
 GNDI=zeros(LEl,8);
 for n1=1:LEl
@@ -149,4 +161,16 @@ end
 % end
 
 % fprintf(fileID,ENDTEXT,LEl);   
+fclose(fileID);
+
+OutputFileName='GND.txt';
+fileID = fopen(OutputFileName,'w+');
+
+FMT='%12.8e %12.8e %12.8e %12.8e %12.8e %12.8e %12.8e %12.8e \n';
+
+
+for n1=1:LEl
+fprintf(fileID,FMT,GNDI(n1,:));    
+end
+
 fclose(fileID);
