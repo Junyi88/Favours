@@ -50,4 +50,4 @@ for i in range(len(X1s)):
 ax.set_xlabel('x')
 ax.set_ylabel('y')
 ax.set_zlabel('z')
-ax.set_title('No Strut')
+ax.set_title('Strutted')
