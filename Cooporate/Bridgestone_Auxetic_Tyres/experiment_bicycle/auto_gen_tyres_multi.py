@@ -28,8 +28,12 @@ else:
 nExtend = int(wheel_params['y_layer'] / 2) + 1
 
 # %%--------------------
-out_dir = './ignoreDir/' 
+out_dir = './ignoreDir/x_{}/'.format(x_layer)
+if not os.path.isdir(out_dir):
+    os.makedirs(out_dir) 
 
+np.save(os.path.join(out_dir, "StrutlessMap.npy"), StrutlessMap)
+np.save(os.path.join(out_dir, "StruttedMap.npy"), StruttedMap)
 
 # %% -----------------------------------
 fig = plt.figure(1, clear=True)
@@ -44,6 +48,15 @@ ax.scatter3D(NodePos[:, 0], NodePos[:, 1], NodePos[:, 2], s=20, c='k')
 for i in range(Xs.shape[0]):
     ax.plot3D(Xs[i, :], Ys[i, :], Zs[i, :], 'black', linewidth=2)
 
+out_path = os.path.join(out_dir, "X_0.npy")
+np.save(out_path, Xs)
+out_path = os.path.join(out_dir, "Y_0.npy")
+np.save(out_path, Ys)
+out_path = os.path.join(out_dir, "Z_0.npy")
+np.save(out_path, Zs)
+out_path = os.path.join(out_dir, "NodePos_0.npy")
+np.save(out_path, NodePos)
+
 for i_ext in range(1, nExtend):
     NodePos = adjust_node_pos(NodePos_ref, Ny=i_ext,
         r_mid=wheel_params['r_mid'], y_dist=wheel_params['y_dist'],
@@ -53,6 +66,16 @@ for i_ext in range(1, nExtend):
     ax.scatter3D(NodePos[:, 0], NodePos[:, 1], NodePos[:, 2], s=20, c='b')
     for i in range(Xs.shape[0]):
         ax.plot3D(Xs[i, :], Ys[i, :], Zs[i, :], 'blue', linewidth=2)
+
+    out_path = os.path.join(out_dir, "X_p{}.npy".format(i_ext))
+    np.save(out_path, Xs)
+    out_path = os.path.join(out_dir, "Y_p{}.npy".format(i_ext))
+    np.save(out_path, Ys)
+    out_path = os.path.join(out_dir, "Z_p{}.npy".format(i_ext))
+    np.save(out_path, Zs)
+    out_path = os.path.join(out_dir, "NodePos_p{}.npy".format(i_ext))
+    np.save(out_path, NodePos)
+
 
     #
     NodePos = adjust_node_pos(NodePos_ref, Ny=-i_ext,
@@ -64,6 +87,14 @@ for i_ext in range(1, nExtend):
     for i in range(Xs.shape[0]):
         ax.plot3D(Xs[i, :], Ys[i, :], Zs[i, :], 'red', linewidth=2)
 
+    out_path = os.path.join(out_dir, "X_n{}.npy".format(i_ext))
+    np.save(out_path, Xs)
+    out_path = os.path.join(out_dir, "Y_n{}.npy".format(i_ext))
+    np.save(out_path, Ys)
+    out_path = os.path.join(out_dir, "Z_n{}.npy".format(i_ext))
+    np.save(out_path, Zs)
+    out_path = os.path.join(out_dir, "NodePos_n{}.npy".format(i_ext))
+    np.save(out_path, NodePos)
 
 
 

@@ -53,7 +53,6 @@ X1s, Y1s, Z1s = generate_individual_beams(NodePos, StruttedMap)
 
 # %% ----------------------
 fig = plt.figure(1, clear=True)
-
 ax = fig.add_subplot(111, projection='3d')
 ax.scatter3D(NodePos[:, 0], NodePos[:, 1], NodePos[:, 2], s=20, c='r')
 
