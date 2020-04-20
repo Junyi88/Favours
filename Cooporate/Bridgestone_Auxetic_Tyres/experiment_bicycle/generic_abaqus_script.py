@@ -52,7 +52,7 @@ def generate_part(val_name, NodePos, StrutMap):
     p = mdb.models[ModelName].Part(name=PartName, dimensionality=THREE_D, \
         type=DEFORMABLE_BODY)
     p.ReferencePoint(point=(0.0, 0.0, 0.0))
-    p = mdb.models[ModelName].parts[PartName]    
+    p = mdb.models[ModelName].parts[PartName]
 
     PointD = ()
     FetD = ()
@@ -74,9 +74,9 @@ def generate_part(val_name, NodePos, StrutMap):
         StrutLocs = StrutLocs +  \
             ((d[P1], d[P2]),)
 
-    p.WirePolyLine(points=StrutLocs, mergeWire=OFF, meshable=ON)
+    p.WirePolyLine(points=StrutLocs, mergeType=MERGE, meshable=ON)
 
-read_dir = './x_8/'
+read_dir = './'
 val_list = ['0', 'n1', 'p1', 'n2', 'p2', 'n3', 'p3', 'n4', 'p4']
 
 for val_name in val_list:

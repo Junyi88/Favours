@@ -6,13 +6,13 @@ import matplotlib.pyplot as plt
 import os
 
 # %% --------------------------------------
-x_layer = 4
+x_layer = 2
 
 outer_diameter = 647
 inner_diameter = 423
 width = 215
 
-has_additional_struts = False
+has_additional_struts = True
 
 # %% --------------------
 wheel_params = estimate_params_from_x_layer(x_layer, outer_diameter, inner_diameter, width)
