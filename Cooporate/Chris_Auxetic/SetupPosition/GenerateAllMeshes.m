@@ -6,7 +6,7 @@ L=11.5;
 
 
 %%
-Pr.Mt.YM=115e3;
+Pr.Mt.YM=110e3;
 Pr.Mt.nu=0.33;
 
 Pr.Ge.r=1.15;

@@ -15,8 +15,14 @@ width = 215
 
 has_additional_struts = True
 
+length_width_ratio = 11.5 / (17.5 - 5.5)
+H_h_ratio = 17.5 / 5.5
+length_width_ratio = 34.5 / (17.5 - 5.5)
+H_h_ratio = 17.5 / 5.5
+
+
 # %% --------------------
-wheel_params = estimate_params_from_x_layer(x_layer, outer_diameter, inner_diameter, width)
+wheel_params = estimate_params_from_x_layer(x_layer, outer_diameter, inner_diameter, width, length_width_ratio=length_width_ratio, H_h_ratio=H_h_ratio)
 
 NodePoints, StrutlessMap, StruttedMap = get_preset_info()
 NodePos_ref = generate_node_positions(H=wheel_params['H'], h=wheel_params['h'], L=wheel_params['L'])
@@ -28,6 +34,8 @@ else:
 
 NodePos_ref, StrutMap = slice_vals(10, NodePos_ref, StrutMap)
 
+StruttedMap = StrutMap
+StrutlessMap = StrutMap
 nExtend = int(wheel_params['y_layer'] / 2) + 1
 
 # %%--------------------
